@@ -16,7 +16,7 @@ Object.extend(Sprite.prototype, {
     animate : function(canvas) {
         this.x += this.dx;
         this.y += this.dy;
-        if ( this.x > 500 || this.x < /*110*/ 0 )
+        if ( this.x > 560 || this.x < /*110*/ 0 )
             this.dx = -this.dx;
         if ( this.y > 420 || this.y < 30 )
             this.dy = -this.dy

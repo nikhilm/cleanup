@@ -28,7 +28,7 @@ Object.extend(Game.prototype, {
                 console.log("Error setting up canvas");
             }
         }
-        this.canvas.fillRect(0, 0, 640, 480);
+        this.canvas.fillRect(0, 0, 600, 480);
         
         timer = document.getElementById('time-canvas');
         if (timer && timer.getContext) {
@@ -46,6 +46,7 @@ Object.extend(Game.prototype, {
     attachEvents : function() {
         elem = document.getElementById('game-canvas');
         elem.onclick = (function(evt) {
+            this.startTime = new Date().getTime();
             this.running = evt.button == 0;
         }).bind(this);
     },
