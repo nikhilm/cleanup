@@ -54,6 +54,7 @@ Object.extend(Game.prototype, {
     gameLoop : function() {
         if(this.running) {
             this.sprite.animate(this.canvas);
+            this.updateCountdown();
         }
     },
     
@@ -64,7 +65,7 @@ Object.extend(Game.prototype, {
             console.log("Can't skip next level");
         }
         else {
-            frac = time > this.skipTime ? 0 : time/this.skipTime;
+            frac = time/this.skipTime;
             this.timerCanvas.fillStyle = 'black';
             this.timerCanvas.fillRect(0, 0, 50, frac*300);
         }
