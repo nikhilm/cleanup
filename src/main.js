@@ -13,6 +13,8 @@ Object.extend(Game.prototype, {
         this.attachEvents();
         
         this.startTime = new Date().getTime();
+        this.sprite = new Sprite(0, 40, document.getElementById('chef'));
+        this.sprite.dx = 2;
         setInterval(this.gameLoop.bind(this), 35);
     },
     
@@ -50,9 +52,7 @@ Object.extend(Game.prototype, {
     
     gameLoop : function() {
         if(this.running) {
-            this.canvas.fillStyle = 'red';
-            this.canvas.fillRect(Math.random() * 600 + 1, Math.random() * 400, 40, 40);
-            this.updateCountdown();
+            this.sprite.animate(this.canvas);
         }
     },
     
