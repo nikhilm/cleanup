@@ -1,0 +1,47 @@
+<html>
+<head>
+<script language="javascript" src="base.js" > </script>
+<script language="javascript" src="sprite.js" > </script>
+<script language="javascript" src="main.js" > </script>
+
+<style>
+img.gamedata {
+    display : none;
+}
+
+canvas#game-canvas {
+    margin:0 3% 0 20%;
+    float: left;
+}
+
+div#hud {
+    float: left;
+}
+</style>
+</head>
+<body>
+
+<!-- PRELOADS -->
+<img src="weight-lifting.jpg" id="chef" width="30" height="30" class="gamedata" />
+<!-- END PRELOADS -->
+
+<h1>Game TITLE!</h1>
+
+<h2> Level name </h2>
+
+<canvas id="game-canvas" width="640" height="480">
+Fallback content, in case the browser does not support Canvas.
+</canvas>
+
+<div id="hud">
+<h4> Lives </h4>
+<img src="weight-lifting.jpg" class="life" width="30" height="30" />
+<img src="weight-lifting.jpg" class="life" width="30" height="30" />
+
+<h4> Time </h4>
+<canvas id="time-canvas" width="50" height="300">
+</canvas>
+</div>
+
+</body>
+</html>

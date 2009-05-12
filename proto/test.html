@@ -1,0 +1,102 @@
+<html>
+<head>
+</head>
+<body onload="init()">
+<img src="weight-lifting.jpg" id="chef" />
+<canvas id="myCanvas" width="640" height="480">
+Fallback content, in case the browser does not support Canvas.
+</canvas>
+
+<script language="javascript">
+
+    var Level = {
+        levelName : 'This is a test',
+        levelDesc : 'All your base are belong to us',
+        map : [ [ '#', '0', '0' ],
+                [ '0', '#', '0' ],
+                [ '0', '0', '#' ] ]
+    };
+    
+    function Sprite() { }
+    Sprite.prototype = {
+        x : 0,
+        y : 0,
+        dx : 3,
+        canvas : null,
+        
+        init : function(ctx, y) {
+            this.canvas = ctx;
+            this.y = y;
+            return this;
+        },
+        
+        draw : function() {
+            this.canvas.drawImage(chefImg, this.x, this.y, 40, 40);
+            drawGrid();
+        },
+        
+        animate : function() {
+            this.canvas.fillStyle = 'black';
+            this.canvas.fillRect(this.x, this.y, 40, 40);
+            this.x += this.dx;
+            if ( this.x > 600 || this.x < 0 )
+                this.dx = -this.dx;
+            this.draw();
+        }
+    };
+
+    var drawGrid = function(canvas) {
+        canvas.lineWidth = 3;
+        canvas.fillStyle = 'rgb(255, 0, 0)';
+
+        var dim = 30;
+
+        for( i = 0; i<420/dim; i++) {
+            for( j = 0; j < 420/dim; j++) {
+                canvas.strokeRect(110+i*dim, dim+j*dim, dim, dim); canvas.fillRect(110+i*dim, dim + j*dim, dim, dim);
+            }
+        }
+        
+                
+    };
+
+    var canvas;
+    var chefImg = document.getElementById('chef');
+    
+    Function.prototype.bind = function(obj) {
+        var __method = this;
+        return function() {
+            __method.apply(obj, arguments);
+        }
+    };
+
+    function init() {
+    // Get a reference to the element.
+    var elem = document.getElementById('myCanvas');
+
+    // Always check for properties and methods, to make sure your code doesn't break 
+    // in other browsers.
+    if (elem && elem.getContext) {
+        // Get the 2d context.
+        // Remember: you can only initialize one context per element.
+        var context = elem.getContext('2d');
+        if (context) {
+            context.fillStyle = 'black';
+            context.fillRect(0, 0, 640, 480);
+            drawGrid(context);
+
+            canvas = context;
+            for( i = 0; i < 15; i++) {
+                var s = new Sprite();
+                s.init(canvas, i*40);
+                setInterval(s.animate.bind(s), 30);
+            }
+            // You are done! Now you can draw your first rectangle.
+            // You only need to provide the (x,y) coordinates, followed by the width and 
+            // height dimensions.
+        }
+    }
+}
+</script>
+</body>
+</html>

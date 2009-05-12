@@ -1,0 +1,11 @@
+based on solarwolf
+
+Spaghetti monsters are enemies - fire meatballs at us
+clean up the plates
+bugs are like mines
+
+powerups
+ - cheese - splatters all meatballs
+ - bug spray - kill any bugs present
+ - new apron - temporary shield
+ - rewind - set clock to UTC :)
