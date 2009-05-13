@@ -62,7 +62,6 @@ Object.extend(Game.prototype, {
         time = new Date().getTime()-this.startTime;
         if ( time > this.skipTime ) {
             this.skipNext = false;
-            console.log("Can't skip next level");
         }
         else {
             frac = time/this.skipTime;
@@ -73,7 +72,34 @@ Object.extend(Game.prototype, {
     
     toString : function () {
         return "Game";
+    },
+    
+    keyPressed : function(evt) {
+        if( !this.running )
+            return;
+        
+        accepted = true;
+        if( evt.keyCode == 38 ) // up arrow
+            this.sprite.dy = -1;
+        else if( evt.keyCode == 40 )
+            this.sprite.dy = 1;
+        else if( evt.keyCode == 37 )
+            this.sprite.dx = -1;
+        else if( evt.keyCode == 39 )
+            this.sprite.dx = 1;
+        else
+            accepted = false;
+            
+        if( accepted ) {
+            evt.stopPropagation();
+            evt.preventDefault();
+        }
     }
 });
 
-window.onload = function() { new Game(); };
+g = null;
+
+window.onload = function() {
+    g = new Game();
+    document.onkeypress = g.keyPressed.bind(g);
+};
