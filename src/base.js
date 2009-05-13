@@ -31,3 +31,19 @@ Function.prototype.bind = function(obj) {
         __method.apply(obj, arguments);
     }
 };
+
+// returns a shuffled version of this array
+// based on python's random.shuffle
+Array.prototype.shuffle = function() {
+    cpy = new Array();
+    for( i = 0; i < this.length ; i++ )
+        cpy[i] = this[i];
+        
+    for( i = this.length - 1; i >= 1; i-- ) {
+        j = parseInt(Math.random() * (i+1));
+        tmp = cpy[j];
+        cpy[j] = cpy[i];
+        cpy[i] = tmp;
+    }
+    return cpy;
+}
