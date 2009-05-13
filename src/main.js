@@ -15,6 +15,9 @@ Object.extend(Game.prototype, {
         this.startTime = new Date().getTime();
         this.sprite = new Sprite(0, 40, document.getElementById('chef'));
         this.sprite.dx = 2;
+        
+        this.sprite1 = new Sprite(0, 80, document.getElementById('chef'));
+        
         setInterval(this.gameLoop.bind(this), 35);
     },
     
@@ -54,6 +57,12 @@ Object.extend(Game.prototype, {
     gameLoop : function() {
         if(this.running) {
             this.sprite.animate(this.canvas);
+            this.sprite1.animate(this.canvas);
+            
+            x = this.sprite1.rect().x;
+            y = this.sprite1.rect().y;
+            if( this.sprite.collidepoint(x, y) )
+                console.log("HIT");
             this.updateCountdown();
         }
     },

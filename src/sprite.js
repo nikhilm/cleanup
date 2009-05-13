@@ -21,5 +21,37 @@ Object.extend(Sprite.prototype, {
         if ( this.y > 420 || this.y < 30 )
             this.dy = -this.dy
         this.draw(canvas);
+    },
+    
+    rect : function() {
+        return { x : this.x, y : this.y, width : this.image.width, height : this.image.height };
+    },
+    
+    collidepoint : function(x, y) {
+        r = this.rect();
+        if( x < r.x || x > r.x + r.width )
+            return false;
+        if( y < r.y || y > r.y + r.height )
+            return false;
+        return true;
+    },
+    
+    colliderect : function(rect) {
+        r = this.rect();
+        
+        if( r.x + r.width < rect.x ) return false;
+        if( r.x > rect.x + rect.width ) return false;
+        if( r.y + r.height < rect.y ) return false;
+        if( r.y > rect.y + rect.height ) return false;
+        
+        return true;
+    }
+});
+
+/*** Spaghetti monsters ***/
+var Monster = Class.create();
+Object.extend(Monster.prototype, new Sprite());
+Object.extend(Monster.prototype, {
+    initialize : function(x, y, img) {
     }
 });
