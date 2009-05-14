@@ -13,6 +13,10 @@ Object.extend = function(dest, src) {
     return dest;
 };
 
+Object.inherits = function(subclass, superclass) {
+    subclass.prototype._super = superclass.prototype;
+};
+
 Class = {
     create:function() {
         return function() {
