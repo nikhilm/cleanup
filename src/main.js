@@ -8,16 +8,14 @@ Object.extend(Game.prototype, {
     skipTime : 10*1000, // 30 seconds
     skipNext : true,
     
+    monsters : [],
+    
     initialize : function() {
         this.setupCanvas();
         this.attachEvents();
+        this.setupMonsters();
         
         this.startTime = new Date().getTime();
-        this.sprite = new Sprite(0, 40, document.getElementById('chef'));
-        this.sprite.dx = 2;
-        
-        this.sprite1 = new Sprite(0, 80, document.getElementById('chef'));
-        
         setInterval(this.gameLoop.bind(this), 35);
     },
     
@@ -56,13 +54,11 @@ Object.extend(Game.prototype, {
     
     gameLoop : function() {
         if(this.running) {
-            this.sprite.animate(this.canvas);
-            this.sprite1.animate(this.canvas);
             
-            x = this.sprite1.rect().x;
-            y = this.sprite1.rect().y;
-            if( this.sprite.collidepoint(x, y) )
-                console.log("HIT");
+            for( i = 0; i < this.monsters.length; i++ )
+                this.monsters[i].animate(this.canvas);
+                
+            this.drawGrid(this.canvas);
             this.updateCountdown();
         }
     },
@@ -88,7 +84,8 @@ Object.extend(Game.prototype, {
             return;
         
         accepted = true;
-        if( evt.keyCode == 38 ) // up arrow
+        
+        /*if( evt.keyCode == 38 ) // up arrow
             this.sprite.dy = -1;
         else if( evt.keyCode == 40 )
             this.sprite.dy = 1;
@@ -96,13 +93,48 @@ Object.extend(Game.prototype, {
             this.sprite.dx = -1;
         else if( evt.keyCode == 39 )
             this.sprite.dx = 1;
-        else
+        else {
+            this.sprite.dx = dx;
+            this.sprite.dy = dy;
             accepted = false;
+        }
             
         if( accepted ) {
             evt.stopPropagation();
             evt.preventDefault();
-        }
+        }*/
+    },
+    
+    // TODO: Simple and stupid for now
+    drawGrid : function(canvas) {
+        canvas.fillStyle = 'maroon';
+        for( i = 0; i < 14 ; i++ )
+            for( j = 0; j < 14; j++ )
+                canvas.fillRect(90+i*30, 30+j*30, 30, 30);
+    },
+    
+    setupMonsters : function() {
+        mtop = new Monster(rpos(C.MONSTER_LEFT,  C.MONSTER_RIGHT - C.MONSTER_LEFT), 0,
+                            'chef',
+                            C.MONSTER_DELTA, 0,
+                            rect(C.MONSTER_LEFT, 0, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
+        
+        mright = new Monster(C.GRID_RIGHT, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
+                             'chef',
+                             0, C.MONSTER_DELTA,
+                             rect(C.GRID_RIGHT, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
+                             
+        mbot = new Monster(rpos(C.MONSTER_LEFT, C.MONSTER_RIGHT - C.MONSTER_LEFT), C.GRID_BOTTOM,
+                           'chef',
+                           C.MONSTER_DELTA, 0,
+                           rect(C.MONSTER_LEFT, C.GRID_BOTTOM, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
+                           
+        mleft = new Monster(C.GRID_LEFT - C.SPRITE_SIZE, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
+                            'chef',
+                            0, C.MONSTER_DELTA,
+                            rect(C.GRID_LEFT - C.SPRITE_SIZE, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
+                            
+        this.monsters = [mtop, mright, mbot, mleft];
     }
 });
 
