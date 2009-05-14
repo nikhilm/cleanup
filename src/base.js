@@ -36,6 +36,8 @@ Function.prototype.bind = function(obj) {
     }
 };
 
+/*** GAME UTILITIES AND CONSTANTS ***/
+
 // returns a shuffled version of this array
 // based on python's random.shuffle
 Array.prototype.shuffle = function() {
@@ -50,4 +52,30 @@ Array.prototype.shuffle = function() {
         cpy[i] = tmp;
     }
     return cpy;
+}
+
+function rect(x, y, w, h) {
+    return { x: x, y : y, width : w, height : h };
+}
+
+/*** CONSTANTS ***/
+var C = {
+    WORLD_WIDTH : 600,
+    WORLD_HEIGHT : 480,
+    TILE_WIDTH : 30,
+    TILE_HEIGHT : 30,
+    
+    GRID_TOP : 30,
+    GRID_RIGHT : 510,
+    GRID_BOTTOM : 450,
+    GRID_LEFT : 90,
+    
+    SPRITE_SIZE : 30,
+    
+    MONSTER_LEFT : 90,
+    MONSTER_RIGHT : 510,
+    MONSTER_TOP : 0,
+    MONSTER_BOTTOM : 420,
+    
+    MONSTER_DELTA : 3
 }
