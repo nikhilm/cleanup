@@ -58,6 +58,11 @@ function rect(x, y, w, h) {
     return { x: x, y : y, width : w, height : h };
 }
 
+// start <= random x < start+dim
+function rpos(start, dim) {
+    return start + parseInt(Math.random() * dim);
+}
+
 /*** CONSTANTS ***/
 var C = {
     WORLD_WIDTH : 600,
