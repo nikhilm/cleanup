@@ -9,6 +9,7 @@ Object.extend(Game.prototype, {
     skipNext : true,
     
     monsters : [],
+    bullets : [],
     
     initialize : function() {
         this.setupCanvas();
@@ -16,6 +17,7 @@ Object.extend(Game.prototype, {
         this.setupMonsters();
         
         this.startTime = new Date().getTime();
+            
         setInterval(this.gameLoop.bind(this), 35);
     },
     
@@ -55,10 +57,33 @@ Object.extend(Game.prototype, {
     gameLoop : function() {
         if(this.running) {
             
-            for( i = 0; i < this.monsters.length; i++ )
-                this.monsters[i].animate(this.canvas);
-                
             this.drawGrid(this.canvas);
+            
+            fire = Math.random() > 0.9;
+            fire_mon = parseInt(Math.random() * 4);
+            for( i = 0; i < this.monsters.length; i++ ) {
+                this.canvas.fillStyle = 'black';
+                this.canvas.fillRect(this.monsters[i].rect.x, this.monsters[i].rect.y, this.monsters[i].rect.width, this.monsters[i].rect.height);
+                this.monsters[i].update();
+                if( fire && fire_mon == i ) {
+                    this.bullets.push(this.monsters[i].fire());
+                    fire = false;
+                }
+                this.monsters[i].draw(this.canvas);
+            }
+            
+            bullets_cpy = this.bullets.copy();
+            for( i = 0; i < bullets_cpy.length; i++ ) {
+                bullets_cpy[i].update();
+                bullets_cpy[i].draw(this.canvas);
+                if( bullets_cpy[i].dead ) {
+                    this.canvas.fillStyle = 'black';
+                    this.canvas.fillRect(bullets_cpy[i].rect.x, bullets_cpy[i].rect.y, bullets_cpy[i].rect.width, bullets_cpy[i].rect.height);
+                    delete this.bullets[i];
+                    this.bullets = this.bullets.slice(0, i).concat(this.bullets.slice(i+1));
+                    console.log(this.bullets);
+                }
+            }
             this.updateCountdown();
         }
     },
@@ -118,21 +143,25 @@ Object.extend(Game.prototype, {
                             'chef',
                             C.MONSTER_DELTA, 0,
                             rect(C.MONSTER_LEFT, 0, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
+        mtop.direction = C.MONSTER_TOP;
         
         mright = new Monster(C.GRID_RIGHT, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
                              'chef',
                              0, C.MONSTER_DELTA,
                              rect(C.GRID_RIGHT, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
+        mright.direction = C.MONSTER_RIGHT;
                              
         mbot = new Monster(rpos(C.MONSTER_LEFT, C.MONSTER_RIGHT - C.MONSTER_LEFT), C.GRID_BOTTOM,
                            'chef',
                            C.MONSTER_DELTA, 0,
                            rect(C.MONSTER_LEFT, C.GRID_BOTTOM, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
+        mbot.direction = C.MONSTER_BOTTOM;
                            
         mleft = new Monster(C.GRID_LEFT - C.SPRITE_SIZE, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
                             'chef',
                             0, C.MONSTER_DELTA,
                             rect(C.GRID_LEFT - C.SPRITE_SIZE, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
+        mleft.direction = C.MONSTER_LEFT;
                             
         this.monsters = [mtop, mright, mbot, mleft];
     }
