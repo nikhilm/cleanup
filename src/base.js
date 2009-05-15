@@ -38,13 +38,21 @@ Function.prototype.bind = function(obj) {
 
 /*** GAME UTILITIES AND CONSTANTS ***/
 
-// returns a shuffled version of this array
-// based on python's random.shuffle
-Array.prototype.shuffle = function() {
+Array.prototype.copy = function() {
     cpy = new Array();
     for( i = 0; i < this.length ; i++ )
         cpy[i] = this[i];
-        
+    return cpy;
+}
+    
+Array.prototype.remove = function(i) {
+    this = this.slice(0, i).concat(this.slice(i+1));
+}
+
+// returns a shuffled version of this array
+// based on python's random.shuffle
+Array.prototype.shuffle = function() {    
+    cpy = this.copy();
     for( i = this.length - 1; i >= 1; i-- ) {
         j = parseInt(Math.random() * (i+1));
         tmp = cpy[j];
@@ -80,7 +88,10 @@ var C = {
     MONSTER_LEFT : 90,
     MONSTER_RIGHT : 510,
     MONSTER_TOP : 0,
-    MONSTER_BOTTOM : 420,
+    MONSTER_BOTTOM : 420, // top left corner of left and right monsters maximum
     
-    MONSTER_DELTA : 3
+    MONSTER_DELTA : 3,
+    
+    BULLET_SPEED : 2,
+    BULLET_RANGE : 420,
 }
