@@ -23,14 +23,22 @@ Object.extend(Sprite.prototype, {
         canvas.drawImage(this.image, this.rect.x, this.rect.y, this.image.width, this.image.height);
     },
     
-    animate : function(canvas) {
+    update : function(canvas) {
         this.rect.x += this.dx;
         this.rect.y += this.dy;
-        this.draw(canvas);
         
         if( !this.constraints )
             return;
             
+        if ( this.rect.x + this.rect.width > this.constraints.x + this.constraints.width ||
+            this.rect.x < this.constraints.x ||
+            this.rect.y + this.rect.height > this.constraints.y + this.constraints.height ||
+            this.rect.y < this.constraints.y )
+        
+            this.handleConstraint();
+    },
+               
+    handleConstraint : function() {
         if ( this.rect.x + this.rect.width > this.constraints.x + this.constraints.width )
             this.dx = -Math.abs(this.dx);
             
@@ -44,7 +52,7 @@ Object.extend(Sprite.prototype, {
             this.dy = Math.abs(this.dy);
     },
     
-    collidepoint : function(x, y) {
+    collidePoint : function(x, y) {
         r = this.rect;
         if( x < r.x || x > r.x + r.width )
             return false;
@@ -53,7 +61,7 @@ Object.extend(Sprite.prototype, {
         return true;
     },
     
-    colliderect : function(rect) {
+    collideRect : function(rect) {
         r = this.rect;
         
         if( r.x + r.width < rect.x ) return false;
@@ -74,12 +82,48 @@ Object.inherits(Sprite, Object);
 var Monster = Class.create();
 Object.extend(Monster.prototype, Sprite.prototype);
 Object.extend(Monster.prototype, {
+    direction : null,
     initialize : function() {
         this._super.initialize.apply(this, arguments);
     },
     
     toString : function() {
         return "Monster";
+    },
+               
+    fire : function() {
+        bdx = 0;
+        bdy = 0;
+        
+        switch( this.direction ) {
+            case C.MONSTER_TOP : bdy = C.BULLET_SPEED; break;
+            case C.MONSTER_RIGHT : bdx = -C.BULLET_SPEED; break;
+            case C.MONSTER_BOTTOM : bdy = -C.BULLET_SPEED; break;
+            case C.MONSTER_LEFT : bdx = C.BULLET_SPEED; break;
+        }
+        return new Bullet(this.rect.x, this.rect.y, 'chef', bdx, bdy);
     }
 });
 Object.inherits(Monster, Sprite);
+
+
+/*** Bullet ***/
+var Bullet = Class.create();
+Object.extend(Bullet.prototype, Sprite.prototype);
+Object.extend(Bullet.prototype, {
+    travelled : 0,
+    dead : false,
+    initialize : function() {
+        this._super.initialize.apply(this, arguments);
+    },
+    
+    update : function() {
+        this.travelled += Math.max(Math.abs(this.dx), Math.abs(this.dy));
+        
+        if( this.travelled >= C.BULLET_RANGE )
+            this.dead = true;
+        
+        this._super.update.apply(this, arguments);
+    }
+});
+Object.inherits(Bullet, Sprite);
