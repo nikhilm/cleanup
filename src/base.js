@@ -38,21 +38,25 @@ Function.prototype.bind = function(obj) {
 
 /*** GAME UTILITIES AND CONSTANTS ***/
 
-Array.prototype.copy = function() {
+Array.prototype.clone = function() {
     cpy = new Array();
     for( i = 0; i < this.length ; i++ )
         cpy[i] = this[i];
     return cpy;
 }
     
+/*
+ * Removes element at index i, returns the array.
+ */
 Array.prototype.remove = function(i) {
-    this = this.slice(0, i).concat(this.slice(i+1));
+    this.splice(i,1);
+    return this;
 }
 
 // returns a shuffled version of this array
 // based on python's random.shuffle
 Array.prototype.shuffle = function() {    
-    cpy = this.copy();
+    cpy = this.clone();
     for( i = this.length - 1; i >= 1; i-- ) {
         j = parseInt(Math.random() * (i+1));
         tmp = cpy[j];
