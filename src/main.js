@@ -59,7 +59,7 @@ Object.extend(Game.prototype, {
             
             this.drawGrid(this.canvas);
             
-            fire = Math.random() > 0.9;
+            fire = Math.random() < 0.01;
             fire_mon = parseInt(Math.random() * 4);
             for( i = 0; i < this.monsters.length; i++ ) {
                 this.canvas.fillStyle = 'black';
@@ -72,7 +72,7 @@ Object.extend(Game.prototype, {
                 this.monsters[i].draw(this.canvas);
             }
             
-            bullets_cpy = this.bullets.copy();
+            bullets_cpy = this.bullets.clone();
             for( i = 0; i < bullets_cpy.length; i++ ) {
                 bullets_cpy[i].update();
                 bullets_cpy[i].draw(this.canvas);
