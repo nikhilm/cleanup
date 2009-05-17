@@ -10,11 +10,13 @@ Object.extend(Game.prototype, {
     
     monsters : [],
     bullets : [],
+    level : null,
     
     initialize : function() {
         this.setupCanvas();
         this.attachEvents();
         this.setupMonsters();
+        this.setupLevel();
         
         this.startTime = new Date().getTime();
             
@@ -53,11 +55,25 @@ Object.extend(Game.prototype, {
             this.running = evt.button == 0;
         }).bind(this);
     },
+               
+    setupLevel : function() {
+        this.level = new Level();
+        this.level.name = "Hi there";
+        this.level.map = [ new Plate(1, 300, 300) ];
+        setInterval(this.level.map[0].touch.bind(this.level.map[0]), 2000);
+    },
     
     gameLoop : function() {
         if(this.running) {
             
             this.drawGrid(this.canvas);
+            
+            this.level.update();
+            if( this.level.map[0] && this.level.map[0].dead ) {
+                this.level.map.remove(0);
+                console.log(this.level.map);
+            }
+            this.level.draw(this.canvas);
             
             fire = Math.random() < 0.01;
             fire_mon = parseInt(Math.random() * 4);
