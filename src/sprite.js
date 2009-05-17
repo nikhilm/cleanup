@@ -5,18 +5,25 @@ Object.extend(Sprite.prototype, {
     rect : null,
     image : null,
     constraints : null,
+    dead : false,
     
     // imgid should be id of img/canvas
     initialize : function(x, y, imgid, dx, dy, constraints) {
         this.dx = dx || 0;
         this.dy = dy || 0;
-        this.image = document.getElementById(imgid);
-        this.rect = rect(x || 0,
-                         y || 0,
-                         this.image ? this.image.width : 0,
-                         this.image ? this.image.height : 0);
+        this.rect = rect(x, y);
+        
+        this.setImage(imgid);
         
         this.constraints = constraints || rect(0, 0, C.WORLD_WIDTH, C.WORLD_HEIGHT);
+    },
+               
+    setImage : function(id) {        
+        this.image = document.getElementById(id);
+        this.rect = rect(this.rect.x || 0,
+                         this.rect.y || 0,
+                         this.image ? this.image.width : 0,
+                         this.image ? this.image.height : 0);
     },
 
     draw : function(canvas) {
@@ -112,7 +119,6 @@ var Bullet = Class.create();
 Object.extend(Bullet.prototype, Sprite.prototype);
 Object.extend(Bullet.prototype, {
     travelled : 0,
-    dead : false,
     initialize : function() {
         this._super.initialize.apply(this, arguments);
     },
