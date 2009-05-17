@@ -133,3 +133,28 @@ Object.extend(Bullet.prototype, {
     }
 });
 Object.inherits(Bullet, Sprite);
+
+/*** Plate ***/
+var Plate = Class.create();
+Object.extend(Plate.prototype, Sprite.prototype);
+Object.extend(Plate.prototype, {
+    touches : 1,
+    touched : 0,
+               
+    initialize : function(touches) {
+        this._super.initialize.apply(this, Array.prototype.slice.call(arguments, 1));
+        this.touches = touches;
+        this.setImage('plate-img-'+this.touches);
+    },
+    
+    update : function() {
+        if( this.touched == this.touches )
+            this.dead = true;
+    },
+               
+    touch : function() {
+        console.log("Touched", this);
+        this.touched += 1;
+    }
+});
+Object.inherits(Plate, Sprite);
