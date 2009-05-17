@@ -53,6 +53,14 @@ Array.prototype.remove = function(i) {
     return this;
 }
 
+/*
+ * Pass a function f(elt) or f(elt, i)
+ */
+Array.prototype.each = function(fun) {
+    for( i = 0; i < this.length; i++ )
+        fun(this[i], i);
+}
+
 // returns a shuffled version of this array
 // based on python's random.shuffle
 Array.prototype.shuffle = function() {    
