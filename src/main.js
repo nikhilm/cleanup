@@ -7,16 +7,22 @@ Object.extend(Game.prototype, {
     startTime : 0,
     skipTime : 10*1000, // 30 seconds
     skipNext : true,
+    paused : false,
     
     monsters : [],
     bullets : [],
+    chef : null,
     level : null,
+    sprites : [],
     
     initialize : function() {
         this.setupCanvas();
         this.attachEvents();
         this.setupMonsters();
         this.setupLevel();
+        
+        this.chef = new Sprite(300, 300, 'chef');
+        this.sprites.push([this.chef]);
         
         this.startTime = new Date().getTime();
         this.comment('<b>Start</b> the game!');
@@ -60,46 +66,60 @@ Object.extend(Game.prototype, {
         this.level = new Level();
         this.level.name = "Hi there";
         this.level.map = [ new Plate(1, 300, 300) ];
+        this.sprites.push(this.level.map);
         setInterval(this.level.map[0].touch.bind(this.level.map[0]), 2000);
+    },
+               
+    update : function() {
+        if( this.paused )
+            return;
+        
+        this.level.update();
+        if( this.level.map[0] && this.level.map[0].dead ) {
+            this.level.map.remove(0);
+        }
+        // TODO: All collision detection and stuff
+        
+        fire = Math.random() < 0.01;
+        fire_mon = this.monsters[parseInt(Math.random() * 4)];
+        this.monsters.each((function(monster) {
+            monster.update();
+            if( fire && fire_mon === monster ) {
+                this.bullets.push(monster.fire());
+                fire = false;
+            }
+        }).bind(this));
+        
+        
+        bullets_cpy = this.bullets.clone();
+        bullets_cpy.each((function(bullet, i) {
+            bullet.update();
+            if( bullet.dead ) {
+                this.canvas.fillStyle = 'black';
+                this.canvas.fillRect(bullets_cpy[i].rect.x, bullets_cpy[i].rect.y, bullets_cpy[i].rect.width, bullets_cpy[i].rect.height);
+                this.bullets.remove(i);
+            }
+        }).bind(this));
+    },
+                      
+    draw : function(canvas) {
+        this.drawGrid(this.canvas);
+        this.sprites.each( (function(grp) {
+            //console.log(grp, i, this.sprites.length);
+            grp.each( (function(sprite) {
+                //this.canvas.fillStyle = 'black';
+                //this.canvas.fillRect(sprite.rect.x, sprite.rect.y, sprite.rect.width, sprite.rect.height);
+                sprite.draw(this.canvas);
+            }).bind(this));
+        }).bind(this));
     },
     
     gameLoop : function() {
         if(this.running) {
             
-            this.drawGrid(this.canvas);
+            this.update();
+            this.draw(this.canvas);
             
-            this.level.update();
-            if( this.level.map[0] && this.level.map[0].dead ) {
-                this.level.map.remove(0);
-                console.log(this.level.map);
-            }
-            this.level.draw(this.canvas);
-            
-            fire = Math.random() < 0.01;
-            fire_mon = parseInt(Math.random() * 4);
-            for( i = 0; i < this.monsters.length; i++ ) {
-                this.canvas.fillStyle = 'black';
-                this.canvas.fillRect(this.monsters[i].rect.x, this.monsters[i].rect.y, this.monsters[i].rect.width, this.monsters[i].rect.height);
-                this.monsters[i].update();
-                if( fire && fire_mon == i ) {
-                    this.bullets.push(this.monsters[i].fire());
-                    fire = false;
-                }
-                this.monsters[i].draw(this.canvas);
-            }
-            
-            bullets_cpy = this.bullets.clone();
-            for( i = 0; i < bullets_cpy.length; i++ ) {
-                bullets_cpy[i].update();
-                bullets_cpy[i].draw(this.canvas);
-                if( bullets_cpy[i].dead ) {
-                    this.canvas.fillStyle = 'black';
-                    this.canvas.fillRect(bullets_cpy[i].rect.x, bullets_cpy[i].rect.y, bullets_cpy[i].rect.width, bullets_cpy[i].rect.height);
-                    delete this.bullets[i];
-                    this.bullets = this.bullets.slice(0, i).concat(this.bullets.slice(i+1));
-                    console.log(this.bullets);
-                }
-            }
             this.updateCountdown();
         }
     },
@@ -149,8 +169,8 @@ Object.extend(Game.prototype, {
     // TODO: Simple and stupid for now
     drawGrid : function(canvas) {
         canvas.fillStyle = 'maroon';
-        for( i = 0; i < 14 ; i++ )
-            for( j = 0; j < 14; j++ )
+        for( var i = 0; i < 14 ; i++ )
+            for( var j = 0; j < 14; j++ )
                 canvas.fillRect(90+i*30, 30+j*30, 30, 30);
     },
     
@@ -180,11 +200,21 @@ Object.extend(Game.prototype, {
         mleft.direction = C.MONSTER_LEFT;
                             
         this.monsters = [mtop, mright, mbot, mleft];
+        this.sprites.push(this.monsters);
+        this.sprites.push(this.bullets);
     },
                
     comment : function(html) {
         document.getElementById('comments').innerHTML = html;
         setTimeout(function() { document.getElementById('comments').innerHTML = "" }, 5000);
+    },
+                      
+    pause : function() {
+        this.paused = true;
+    },
+                      
+    unpause : function() {
+        this.paused = false;
     }
 });
 
