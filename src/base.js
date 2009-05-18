@@ -40,7 +40,7 @@ Function.prototype.bind = function(obj) {
 
 Array.prototype.clone = function() {
     cpy = new Array();
-    for( i = 0; i < this.length ; i++ )
+    for( var i = 0; i < this.length ; i++ )
         cpy[i] = this[i];
     return cpy;
 }
@@ -57,15 +57,16 @@ Array.prototype.remove = function(i) {
  * Pass a function f(elt) or f(elt, i)
  */
 Array.prototype.each = function(fun) {
-    for( i = 0; i < this.length; i++ )
+    for( var i = 0; i < this.length; i++ ) {
         fun(this[i], i);
+    }
 }
 
 // returns a shuffled version of this array
 // based on python's random.shuffle
 Array.prototype.shuffle = function() {    
     cpy = this.clone();
-    for( i = this.length - 1; i >= 1; i-- ) {
+    for( var i = this.length - 1; i >= 1; i-- ) {
         j = parseInt(Math.random() * (i+1));
         tmp = cpy[j];
         cpy[j] = cpy[i];
