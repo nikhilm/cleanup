@@ -130,6 +130,10 @@ Object.extend(Bullet.prototype, {
             this.dead = true;
         
         this._super.update.apply(this, arguments);
+    },
+    
+    toString : function() {
+        return "Bullet";
     }
 });
 Object.inherits(Bullet, Sprite);
@@ -153,8 +157,11 @@ Object.extend(Plate.prototype, {
     },
                
     touch : function() {
-        console.log("Touched", this);
         this.touched += 1;
+    },
+    
+    toString : function() {
+        return "Plate";
     }
 });
 Object.inherits(Plate, Sprite);
