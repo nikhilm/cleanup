@@ -30,7 +30,7 @@ Object.extend(Game.prototype, {
     },
     
     setupCanvas : function() {
-        elem = document.getElementById('game-canvas');
+        var elem = document.getElementById('game-canvas');
         if (elem && elem.getContext) {
             // Get the 2d context.
             // Remember: you can only initialize one context per element.
@@ -41,7 +41,7 @@ Object.extend(Game.prototype, {
         }
         this.canvas.fillRect(0, 0, 600, 480);
         
-        timer = document.getElementById('time-canvas');
+        var timer = document.getElementById('time-canvas');
         if (timer && timer.getContext) {
             // Get the 2d context.
             // Remember: you can only initialize one context per element.
@@ -55,7 +55,7 @@ Object.extend(Game.prototype, {
     },
     
     attachEvents : function() {
-        elem = document.getElementById('game-canvas');
+        var elem = document.getElementById('game-canvas');
         elem.onclick = (function(evt) {
             this.startTime = new Date().getTime();
             this.running = evt.button == 0;
@@ -80,8 +80,8 @@ Object.extend(Game.prototype, {
         }
         // TODO: All collision detection and stuff
         
-        fire = Math.random() < 0.01;
-        fire_mon = this.monsters[parseInt(Math.random() * 4)];
+        var fire = Math.random() < 0.01;
+        var fire_mon = this.monsters[parseInt(Math.random() * 4)];
         this.monsters.each((function(monster) {
             monster.update();
             if( fire && fire_mon === monster ) {
@@ -91,7 +91,7 @@ Object.extend(Game.prototype, {
         }).bind(this));
         
         
-        bullets_cpy = this.bullets.clone();
+        var bullets_cpy = this.bullets.clone();
         bullets_cpy.each((function(bullet, i) {
             bullet.update();
             if( bullet.dead ) {
@@ -125,7 +125,7 @@ Object.extend(Game.prototype, {
     },
     
     updateCountdown : function() {
-        time = new Date().getTime()-this.startTime;
+        var time = new Date().getTime()-this.startTime;
         if ( time > this.skipTime ) {
             this.skipNext = false;
         }
@@ -144,7 +144,7 @@ Object.extend(Game.prototype, {
         if( !this.running )
             return;
         
-        accepted = true;
+        var accepted = true;
         
         /*if( evt.keyCode == 38 ) // up arrow
             this.sprite.dy = -1;
@@ -175,25 +175,25 @@ Object.extend(Game.prototype, {
     },
     
     setupMonsters : function() {
-        mtop = new Monster(rpos(C.MONSTER_LEFT,  C.MONSTER_RIGHT - C.MONSTER_LEFT), 0,
+        var mtop = new Monster(rpos(C.MONSTER_LEFT,  C.MONSTER_RIGHT - C.MONSTER_LEFT), 0,
                             'chef',
                             C.MONSTER_DELTA, 0,
                             rect(C.MONSTER_LEFT, 0, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
         mtop.direction = C.MONSTER_TOP;
         
-        mright = new Monster(C.GRID_RIGHT, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
+        var mright = new Monster(C.GRID_RIGHT, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
                              'chef',
                              0, C.MONSTER_DELTA,
                              rect(C.GRID_RIGHT, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
         mright.direction = C.MONSTER_RIGHT;
                              
-        mbot = new Monster(rpos(C.MONSTER_LEFT, C.MONSTER_RIGHT - C.MONSTER_LEFT), C.GRID_BOTTOM,
+        var mbot = new Monster(rpos(C.MONSTER_LEFT, C.MONSTER_RIGHT - C.MONSTER_LEFT), C.GRID_BOTTOM,
                            'chef',
                            C.MONSTER_DELTA, 0,
                            rect(C.MONSTER_LEFT, C.GRID_BOTTOM, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
         mbot.direction = C.MONSTER_BOTTOM;
                            
-        mleft = new Monster(C.GRID_LEFT - C.SPRITE_SIZE, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
+        var mleft = new Monster(C.GRID_LEFT - C.SPRITE_SIZE, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
                             'chef',
                             0, C.MONSTER_DELTA,
                             rect(C.GRID_LEFT - C.SPRITE_SIZE, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));

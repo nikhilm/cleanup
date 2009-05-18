@@ -39,7 +39,7 @@ Function.prototype.bind = function(obj) {
 /*** GAME UTILITIES AND CONSTANTS ***/
 
 Array.prototype.clone = function() {
-    cpy = new Array();
+    var cpy = new Array();
     for( var i = 0; i < this.length ; i++ )
         cpy[i] = this[i];
     return cpy;
@@ -65,9 +65,9 @@ Array.prototype.each = function(fun) {
 // returns a shuffled version of this array
 // based on python's random.shuffle
 Array.prototype.shuffle = function() {    
-    cpy = this.clone();
+    var cpy = this.clone();
     for( var i = this.length - 1; i >= 1; i-- ) {
-        j = parseInt(Math.random() * (i+1));
+        var j = parseInt(Math.random() * (i+1));
         tmp = cpy[j];
         cpy[j] = cpy[i];
         cpy[i] = tmp;

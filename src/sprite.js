@@ -60,7 +60,7 @@ Object.extend(Sprite.prototype, {
     },
     
     collidePoint : function(x, y) {
-        r = this.rect;
+        var r = this.rect;
         if( x < r.x || x > r.x + r.width )
             return false;
         if( y < r.y || y > r.y + r.height )
@@ -69,7 +69,7 @@ Object.extend(Sprite.prototype, {
     },
     
     collideRect : function(rect) {
-        r = this.rect;
+        var r = this.rect;
         
         if( r.x + r.width < rect.x ) return false;
         if( r.x > rect.x + rect.width ) return false;
@@ -99,8 +99,8 @@ Object.extend(Monster.prototype, {
     },
                
     fire : function() {
-        bdx = 0;
-        bdy = 0;
+        var bdx = 0;
+        var bdy = 0;
         
         switch( this.direction ) {
             case C.MONSTER_TOP : bdy = C.BULLET_SPEED; break;
