@@ -19,7 +19,7 @@ Object.extend(Game.prototype, {
         this.setupLevel();
         
         this.startTime = new Date().getTime();
-            
+        this.comment('<b>Start</b> the game!');
         setInterval(this.gameLoop.bind(this), 35);
     },
     
@@ -180,6 +180,11 @@ Object.extend(Game.prototype, {
         mleft.direction = C.MONSTER_LEFT;
                             
         this.monsters = [mtop, mright, mbot, mleft];
+    },
+               
+    comment : function(html) {
+        document.getElementById('comments').innerHTML = html;
+        setTimeout(function() { document.getElementById('comments').innerHTML = "" }, 5000);
     }
 });
 
