@@ -6,12 +6,12 @@ Object.extend( Level.prototype, {
     initialize : function() {},
                
     update : function() {
-        for( i = 0; i < this.map.length; i++ )
+        for( var i = 0; i < this.map.length; i++ )
             this.map[i].update();
     },
                
     draw : function(canvas) {
-        for( i = 0; i < this.map.length; i++ )
+        for( var i = 0; i < this.map.length; i++ )
             this.map[i].draw(canvas);
     }
 });
