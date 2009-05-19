@@ -21,7 +21,9 @@ Object.extend(Game.prototype, {
         this.setupMonsters();
         this.setupLevel();
         
-        this.chef = new Sprite(300, 300, 'chef');
+        this.chef = new Chef(300, 300);
+        this.chef.constraints = rect(C.GRID_LEFT, C.GRID_TOP, C.GRID_RIGHT-C.GRID_LEFT, C.GRID_BOTTOM-C.GRID_TOP);
+        
         this.sprites.push([this.chef]);
         
         this.startTime = new Date().getTime();

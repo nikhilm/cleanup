@@ -165,3 +165,23 @@ Object.extend(Plate.prototype, {
     }
 });
 Object.inherits(Plate, Sprite);
+
+/*** Chef ***/
+var Chef = Class.create();
+Object.extend(Chef.prototype, Sprite.prototype);
+Object.extend(Chef.prototype, {
+               
+    initialize : function() {
+        this._super.initialize.apply(this, arguments);
+        this.setImage('chef');
+    },
+    
+    handleConstraint : function() {
+        this.dx = this.dy = 0;
+    },
+    
+    toString : function() {
+        return "Chef";
+    }
+});
+Object.inherits(Chef, Sprite);
