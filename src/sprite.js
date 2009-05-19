@@ -30,33 +30,34 @@ Object.extend(Sprite.prototype, {
         canvas.drawImage(this.image, this.rect.x, this.rect.y, this.image.width, this.image.height);
     },
     
-    update : function(canvas) {
+    update : function(canvas) {    
+        var cant_go = 0;
+        
+        if( this.rect.x + this.dx + this.rect.width >= this.constraints.x + this.constraints.width )
+            cant_go |= C.RIGHT;
+        if( this.rect.x + this.dx <= this.constraints.x )
+            cant_go |= C.LEFT;
+        if( this.rect.y + this.dy + this.rect.height >= this.constraints.y + this.constraints.height )
+            cant_go |= C.BOTTOM;
+        if( this.rect.y + this.dy <= this.constraints.y )
+            cant_go |= C.TOP;
+        
+        if( cant_go != 0 ) {
+            if( this.handleConstraint(cant_go) )
+                return;
+        }
+        
         this.rect.x += this.dx;
-        this.rect.y += this.dy;
-        
-        if( !this.constraints )
-            return;
-            
-        if ( this.rect.x + this.rect.width > this.constraints.x + this.constraints.width ||
-            this.rect.x < this.constraints.x ||
-            this.rect.y + this.rect.height > this.constraints.y + this.constraints.height ||
-            this.rect.y < this.constraints.y )
-        
-            this.handleConstraint();
+        this.rect.y += this.dy;        
     },
-               
-    handleConstraint : function() {
-        if ( this.rect.x + this.rect.width > this.constraints.x + this.constraints.width )
-            this.dx = -Math.abs(this.dx);
-            
-        if( this.rect.x < this.constraints.x )
-            this.dx = Math.abs(this.dx);
-            
-        if ( this.rect.y + this.rect.height > this.constraints.y + this.constraints.height )
-            this.dy = -Math.abs(this.dy);
-            
-        if( this.rect.y < this.constraints.y )
-            this.dy = Math.abs(this.dy);
+    
+    // should return true if we are not allowed to move right now
+    handleConstraint : function(cant_go) {
+        if( cant_go & C.RIGHT ) this.dx = -Math.abs(this.dx);
+        if( cant_go & C.LEFT ) this.dx = Math.abs(this.dx);
+        if( cant_go & C.BOTTOM ) this.dy = -Math.abs(this.dy);
+        if( cant_go & C.TOP ) this.dy = Math.abs(this.dy);
+        return false;
     },
     
     collidePoint : function(x, y) {
@@ -176,8 +177,18 @@ Object.extend(Chef.prototype, {
         this.setImage('chef');
     },
     
-    handleConstraint : function() {
+    handleConstraint : function(cant_go) {
+        if( cant_go & (C.RIGHT|C.LEFT) ) this.dx = 0;
+        if( cant_go & (C.TOP|C.BOTTOM) ) this.dy = 0;
+        return false;
+    },
+               
+    move : function(dir) {
         this.dx = this.dy = 0;
+        if( dir & C.TOP ) this.dy = -C.CHEF_SPEED;
+        else if( dir & C.RIGHT ) this.dx = C.CHEF_SPEED;
+        else if( dir & C.BOTTOM ) this.dy = C.CHEF_SPEED;
+        else if( dir & C.LEFT ) this.dx = -C.CHEF_SPEED;
     },
     
     toString : function() {
