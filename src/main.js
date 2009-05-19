@@ -87,7 +87,7 @@ Object.extend(Game.prototype, {
         }).bind(this) );
         // TODO: All collision detection and stuff
         
-        var fire = Math.random() < 0.01;
+        var fire = Math.random() < 0.1;
         var fire_mon = this.monsters[parseInt(Math.random() * 4)];
         this.monsters.each((function(monster) {
             monster.update();
@@ -105,7 +105,8 @@ Object.extend(Game.prototype, {
                 this.bullets.remove(i);
                 return;
             }
-            if( !this.chef.dead && this.chef.collideRect(bullet.rect) ) {
+            // NOTE: it is important to call bullet.collideRect and not the other way round
+            if( !this.chef.dead && bullet.collideRect(this.chef.rect) ) {
                 this.chef.dead = true;
                 this.bullets.remove(i);
                 return;

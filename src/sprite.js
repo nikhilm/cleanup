@@ -102,14 +102,17 @@ Object.extend(Monster.prototype, {
     fire : function() {
         var bdx = 0;
         var bdy = 0;
+        var bdir = 0;
         
         switch( this.direction ) {
-            case C.TOP : bdy = C.BULLET_SPEED; break;
-            case C.RIGHT : bdx = -C.BULLET_SPEED; break;
-            case C.BOTTOM : bdy = -C.BULLET_SPEED; break;
-            case C.LEFT : bdx = C.BULLET_SPEED; break;
+            case C.TOP : bdy = C.BULLET_SPEED; bdir = C.BOTTOM; break;
+            case C.RIGHT : bdx = -C.BULLET_SPEED; bdir = C.LEFT; break;
+            case C.BOTTOM : bdy = -C.BULLET_SPEED; bdir = C.TOP; break;
+            case C.LEFT : bdx = C.BULLET_SPEED; bdir = C.RIGHT; break;
         }
-        return new Bullet(this.rect.x, this.rect.y, 'chef', bdx, bdy);
+        var b = new Bullet(this.rect.x, this.rect.y, 'chef', bdx, bdy);
+        b.direction = bdir;
+        return b;
     }
 });
 Object.inherits(Monster, Sprite);
@@ -131,6 +134,33 @@ Object.extend(Bullet.prototype, {
             this.dead = true;
         
         this._super.update.apply(this, arguments);
+    },
+               
+    collideRect : function(rect) {
+        var r = this.rect;
+        switch( this.direction ) {
+            case C.TOP:
+                r.height /= 2;
+                break;
+            case C.RIGHT:
+                r.x += C.SPRITE_SIZE/2;
+                r.width /= 2;
+                break;
+            case C.BOTTOM:
+                r.y += C.SPRITE_SIZE/2;
+                r.height /= 2;
+                break;
+            case C.LEFT:
+                r.width /= 2;
+                break;
+        }
+        
+        if( r.x + r.width < rect.x ) return false;
+        if( r.x > rect.x + rect.width ) return false;
+        if( r.y + r.height < rect.y ) return false;
+        if( r.y > rect.y + rect.height ) return false;
+        
+        return true;
     },
     
     toString : function() {
