@@ -104,10 +104,10 @@ Object.extend(Monster.prototype, {
         var bdy = 0;
         
         switch( this.direction ) {
-            case C.MONSTER_TOP : bdy = C.BULLET_SPEED; break;
-            case C.MONSTER_RIGHT : bdx = -C.BULLET_SPEED; break;
-            case C.MONSTER_BOTTOM : bdy = -C.BULLET_SPEED; break;
-            case C.MONSTER_LEFT : bdx = C.BULLET_SPEED; break;
+            case C.TOP : bdy = C.BULLET_SPEED; break;
+            case C.RIGHT : bdx = -C.BULLET_SPEED; break;
+            case C.BOTTOM : bdy = -C.BULLET_SPEED; break;
+            case C.LEFT : bdx = C.BULLET_SPEED; break;
         }
         return new Bullet(this.rect.x, this.rect.y, 'chef', bdx, bdy);
     }

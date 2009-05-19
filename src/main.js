@@ -200,28 +200,28 @@ Object.extend(Game.prototype, {
     
     setupMonsters : function() {
         var mtop = new Monster(rpos(C.MONSTER_LEFT,  C.MONSTER_RIGHT - C.MONSTER_LEFT), 0,
-                            'chef',
+                            'chef-bottom',
                             C.MONSTER_DELTA, 0,
                             rect(C.MONSTER_LEFT, 0, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
-        mtop.direction = C.MONSTER_TOP;
+        mtop.direction = C.TOP;
         
         var mright = new Monster(C.GRID_RIGHT, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
-                             'chef',
+                             'chef-left',
                              0, C.MONSTER_DELTA,
                              rect(C.GRID_RIGHT, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
-        mright.direction = C.MONSTER_RIGHT;
+        mright.direction = C.RIGHT;
                              
         var mbot = new Monster(rpos(C.MONSTER_LEFT, C.MONSTER_RIGHT - C.MONSTER_LEFT), C.GRID_BOTTOM,
-                           'chef',
+                           'chef-top',
                            C.MONSTER_DELTA, 0,
                            rect(C.MONSTER_LEFT, C.GRID_BOTTOM, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
-        mbot.direction = C.MONSTER_BOTTOM;
+        mbot.direction = C.BOTTOM;
                            
         var mleft = new Monster(C.GRID_LEFT - C.SPRITE_SIZE, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
-                            'chef',
+                            'chef-right',
                             0, C.MONSTER_DELTA,
                             rect(C.GRID_LEFT - C.SPRITE_SIZE, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
-        mleft.direction = C.MONSTER_LEFT;
+        mleft.direction = C.LEFT;
                             
         this.monsters = [mtop, mright, mbot, mleft];
         this.sprites.push(this.monsters);
