@@ -101,12 +101,24 @@ Object.extend(Game.prototype, {
         bullets_cpy.each((function(bullet, i) {
             bullet.update();
             if( bullet.dead ) {
-                this.canvas.fillStyle = 'black';
-                this.canvas.fillRect(bullets_cpy[i].rect.x, bullets_cpy[i].rect.y, bullets_cpy[i].rect.width, bullets_cpy[i].rect.height);
                 this.bullets.remove(i);
+                return;
+            }
+            if( !this.chef.dead && this.chef.collideRect(bullet.rect) ) {
+                this.chef.dead = true;
+                this.bullets.remove(i);
+                return;
             }
         }).bind(this));
         
+        if( this.chef.dead ) {
+            var hud = document.getElementById('hud');
+            hud.removeChild(hud.getElementsByTagName('img')[0]);
+            this.chef.rect.x = 200, this.chef.rect.y = 200;
+            this.chef.update();
+            this.chef.dead = false;
+            console.log("Dead!");
+        }
         this.chef.update(this);
     },
                       
