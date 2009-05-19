@@ -111,7 +111,6 @@ Object.extend(Game.prototype, {
     draw : function(canvas) {
         this.drawGrid(this.canvas);
         this.sprites.each( (function(grp) {
-            //console.log(grp, i, this.sprites.length);
             grp.each( (function(sprite) {
                 //this.canvas.fillStyle = 'black';
                 //this.canvas.fillRect(sprite.rect.x, sprite.rect.y, sprite.rect.width, sprite.rect.height);
@@ -151,19 +150,15 @@ Object.extend(Game.prototype, {
         
         var accepted = true;
         
-        var dx = this.chef.dx, dy = this.chef.dy;
-        this.chef.dx = this.chef.dy = 0;
         if( evt.keyCode == 38 ) // up arrow
-            this.chef.dy = -1;
+            this.chef.move(C.TOP);
         else if( evt.keyCode == 40 )
-            this.chef.dy = 1;
+            this.chef.move(C.BOTTOM);
         else if( evt.keyCode == 37 )
-            this.chef.dx = -1;
+            this.chef.move(C.LEFT);
         else if( evt.keyCode == 39 )
-            this.chef.dx = 1;
+            this.chef.move(C.RIGHT);
         else {
-            this.chef.dx = dx;
-            this.chef.dy = dy;
             accepted = false;
         }
             
