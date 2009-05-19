@@ -74,6 +74,8 @@ Object.extend(Game.prototype, {
         if( this.paused )
             return;
         
+        this.updateCountdown();
+        
         this.level.update();
         if( this.level.map[0] && this.level.map[0].dead ) {
             this.level.map.remove(0);
@@ -100,6 +102,8 @@ Object.extend(Game.prototype, {
                 this.bullets.remove(i);
             }
         }).bind(this));
+        
+        this.chef.update(this);
     },
                       
     draw : function(canvas) {
@@ -120,7 +124,6 @@ Object.extend(Game.prototype, {
             this.update();
             this.draw(this.canvas);
             
-            this.updateCountdown();
         }
     },
     
@@ -146,24 +149,26 @@ Object.extend(Game.prototype, {
         
         var accepted = true;
         
-        /*if( evt.keyCode == 38 ) // up arrow
-            this.sprite.dy = -1;
+        var dx = this.chef.dx, dy = this.chef.dy;
+        this.chef.dx = this.chef.dy = 0;
+        if( evt.keyCode == 38 ) // up arrow
+            this.chef.dy = -1;
         else if( evt.keyCode == 40 )
-            this.sprite.dy = 1;
+            this.chef.dy = 1;
         else if( evt.keyCode == 37 )
-            this.sprite.dx = -1;
+            this.chef.dx = -1;
         else if( evt.keyCode == 39 )
-            this.sprite.dx = 1;
+            this.chef.dx = 1;
         else {
-            this.sprite.dx = dx;
-            this.sprite.dy = dy;
+            this.chef.dx = dx;
+            this.chef.dy = dy;
             accepted = false;
         }
             
         if( accepted ) {
             evt.stopPropagation();
             evt.preventDefault();
-        }*/
+        }
     },
     
     // TODO: Simple and stupid for now
@@ -215,6 +220,13 @@ Object.extend(Game.prototype, {
                       
     unpause : function() {
         this.paused = false;
+    },
+               
+    togglePause : function() {
+        if( this.paused )
+            this.unpause();
+        else
+            this.pause();
     }
 });
 
