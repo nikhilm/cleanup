@@ -14,6 +14,7 @@ Object.extend(Game.prototype, {
     chef : null,
     level : null,
     sprites : [],
+    lives : 3,
     
     initialize : function() {
         this.setupCanvas();
@@ -112,12 +113,19 @@ Object.extend(Game.prototype, {
         }).bind(this));
         
         if( this.chef.dead ) {
-            var hud = document.getElementById('hud');
-            hud.removeChild(hud.getElementsByTagName('img')[0]);
-            this.chef.rect.x = 200, this.chef.rect.y = 200;
-            this.chef.update();
-            this.chef.dead = false;
-            console.log("Dead!");
+            if( this.lives > 0 ) {
+                this.lives -= 1;
+                var hud = document.getElementById('hud');
+                hud.removeChild(hud.getElementsByTagName('img')[0]);
+                this.chef.update();
+                this.chef.dead = false;
+                console.log("Dead!");
+            }
+            else {
+                console.log("Game over");
+                //actually go to next state
+                this.pause();
+            }
         }
         this.chef.update(this);
     },
