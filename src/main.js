@@ -67,9 +67,8 @@ Object.extend(Game.prototype, {
     setupLevel : function() {
         this.level = new Level();
         this.level.name = "Hi there";
-        this.level.map = [ new Plate(1, 300, 300) ];
+        this.level.map = [ new Plate(1, 200, 200) ];
         this.sprites.push(this.level.map);
-        setInterval(this.level.map[0].touch.bind(this.level.map[0]), 2000);
     },
                
     update : function() {
@@ -79,9 +78,12 @@ Object.extend(Game.prototype, {
         this.updateCountdown();
         
         this.level.update();
-        if( this.level.map[0] && this.level.map[0].dead ) {
-            this.level.map.remove(0);
-        }
+        this.level.map.clone().each( (function(plate, i) {
+            if( this.chef.collideRect(plate.rect) ) {
+                plate.dead = true;
+                this.level.map.remove(i);
+            }
+        }).bind(this) );
         // TODO: All collision detection and stuff
         
         var fire = Math.random() < 0.01;
