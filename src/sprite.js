@@ -174,7 +174,7 @@ Object.extend(Chef.prototype, {
                
     initialize : function() {
         this._super.initialize.apply(this, arguments);
-        this.setImage('chef');
+        this.setImage('chef-top');
     },
     
     handleConstraint : function(cant_go) {
@@ -185,10 +185,22 @@ Object.extend(Chef.prototype, {
                
     move : function(dir) {
         this.dx = this.dy = 0;
-        if( dir & C.TOP ) this.dy = -C.CHEF_SPEED;
-        else if( dir & C.RIGHT ) this.dx = C.CHEF_SPEED;
-        else if( dir & C.BOTTOM ) this.dy = C.CHEF_SPEED;
-        else if( dir & C.LEFT ) this.dx = -C.CHEF_SPEED;
+        if( dir & C.TOP ) {
+            this.dy = -C.CHEF_SPEED;
+            this.setImage('chef-top');
+        }
+        else if( dir & C.RIGHT ) {
+            this.dx = C.CHEF_SPEED;
+            this.setImage('chef-right');
+        }
+        else if( dir & C.BOTTOM ) {
+            this.dy = C.CHEF_SPEED;
+            this.setImage('chef-bottom');
+        }
+        else if( dir & C.LEFT ) { 
+            this.dx = -C.CHEF_SPEED;
+            this.setImage('chef-left');
+        }
     },
     
     toString : function() {
