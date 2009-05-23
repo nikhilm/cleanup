@@ -87,7 +87,7 @@ Object.extend(Game.prototype, {
         }).bind(this) );
         // TODO: All collision detection and stuff
         
-        var fire = Math.random() < 0.1;
+        var fire = Math.random() < 0.01;
         var fire_mon = this.monsters[parseInt(Math.random() * 4)];
         this.monsters.each((function(monster) {
             monster.update();
@@ -99,7 +99,7 @@ Object.extend(Game.prototype, {
         
         
         var bullets_cpy = this.bullets.clone();
-        bullets_cpy.each((function(bullet, i) {
+        bullets_cpy.each( (function(bullet, i) {
             bullet.update();
             if( bullet.dead ) {
                 this.bullets.remove(i);
@@ -181,6 +181,8 @@ Object.extend(Game.prototype, {
             this.chef.move(C.LEFT);
         else if( evt.keyCode == 39 )
             this.chef.move(C.RIGHT);
+        else if( evt.charCode == 112 )
+            this.pause();
         else {
             accepted = false;
         }
