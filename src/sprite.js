@@ -30,7 +30,7 @@ Object.extend(Sprite.prototype, {
         canvas.drawImage(this.image, this.rect.x, this.rect.y, this.image.width, this.image.height);
     },
     
-    update : function(canvas) {    
+    update : function(canvas) {
         var cant_go = 0;
         
         if( this.rect.x + this.dx + this.rect.width >= this.constraints.x + this.constraints.width )
@@ -48,7 +48,7 @@ Object.extend(Sprite.prototype, {
         }
         
         this.rect.x += this.dx;
-        this.rect.y += this.dy;        
+        this.rect.y += this.dy;
     },
     
     // should return true if we are not allowed to move right now
@@ -136,8 +136,8 @@ Object.extend(Bullet.prototype, {
         this._super.update.apply(this, arguments);
     },
                
-    collideRect : function(rect) {
-        var r = this.rect;
+    collideRect : function(orect) {
+        var r = rect(this.rect.x, this.rect.y, this.rect.width, this.rect.height); // important to COPY!
         switch( this.direction ) {
             case C.TOP:
                 r.height /= 2;
@@ -155,10 +155,10 @@ Object.extend(Bullet.prototype, {
                 break;
         }
         
-        if( r.x + r.width < rect.x ) return false;
-        if( r.x > rect.x + rect.width ) return false;
-        if( r.y + r.height < rect.y ) return false;
-        if( r.y > rect.y + rect.height ) return false;
+        if( r.x + r.width < orect.x ) return false;
+        if( r.x > orect.x + orect.width ) return false;
+        if( r.y + r.height < orect.y ) return false;
+        if( r.y > orect.y + orect.height ) return false;
         
         return true;
     },
