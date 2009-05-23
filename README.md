@@ -19,6 +19,5 @@ Because a friend who is going to create the graphics is busy right now
 
 TODO
 ----
-A lot of things
-
-Currently the top and left monsters shoot out bullets very fast, I've to debug that
+* Add state architecture
+* Add powerups
