@@ -1,4 +1,5 @@
 var Level = Class.create();
+Object.extend( Level.prototype, State.prototype );
 Object.extend( Level.prototype, {
     name : "",
     map : [], // will be an array of Plates
@@ -15,4 +16,4 @@ Object.extend( Level.prototype, {
             this.map[i].draw(canvas);
     }
 });
-Object.inherits(Level, Object);
+Object.inherits(Level, State);
