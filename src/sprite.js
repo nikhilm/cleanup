@@ -25,6 +25,13 @@ Object.extend(Sprite.prototype, {
                          this.image ? this.image.width : 0,
                          this.image ? this.image.height : 0);
     },
+    
+    erase : function(canvas) {
+        canvas.save();
+        canvas.fillStyle = 'black';
+        canvas.fillRect(this.rect.x, this.rect.y, this.rect.width, this.rect.height);
+        canvas.restore();
+    },
 
     draw : function(canvas) {
         canvas.drawImage(this.image, this.rect.x, this.rect.y, this.image.width, this.image.height);
