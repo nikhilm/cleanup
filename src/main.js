@@ -76,6 +76,14 @@ Object.extend(Game.prototype, {
         if( this.paused )
             return;
         
+        /*this.sprites.each( (function(grp) {
+            grp.each( (function(sprite) {
+                //this.canvas.fillStyle = 'black';
+                //this.canvas.fillRect(sprite.rect.x, sprite.rect.y, sprite.rect.width, sprite.rect.height);
+                sprite.erase(this.canvas);
+            }).bind(this));
+        }).bind(this));*/
+        
         this.updateCountdown();
         
         this.level.update();
@@ -120,10 +128,15 @@ Object.extend(Game.prototype, {
                 hud.removeChild(hud.getElementsByTagName('img')[0]);
                 this.chef.update();
                 this.chef.dead = false;
-                console.log("Dead!");
+                if( this.lives == 0 )
+                    this.comment("Last life!");
+                else if( this.lives == 1 )
+                    this.comment("1 life");
+                else
+                    this.comment(this.lives + " lives to go");
             }
             else {
-                console.log("Game over");
+                this.comment("You're out");
                 //actually go to next state
                 this.pause();
             }
@@ -132,6 +145,8 @@ Object.extend(Game.prototype, {
     },
                       
     draw : function(canvas) {
+        canvas.fillStyle = 'black';
+        canvas.fillRect(0, 0, 600, 480);
         this.drawGrid(this.canvas);
         this.sprites.each( (function(grp) {
             grp.each( (function(sprite) {
