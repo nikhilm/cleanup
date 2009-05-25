@@ -32,6 +32,9 @@ Object.extend(Game.prototype, {
     },
     
     attachEvents : function() {
+        
+        document.onkeypress = this.keyPressed.bind(this);
+        
         var elem = document.getElementById('game-canvas');
         elem.onclick = (function(evt) {
             this.nextState = new Level(30);
@@ -86,6 +89,9 @@ Object.extend(Game.prototype, {
         
         var accepted = true;
         
+        if( this.paused )
+            return;
+        
         accepted = this.state.keyPressed(evt)
                     
         if( accepted ) {
@@ -122,5 +128,4 @@ g = null;
 
 window.onload = function() {
     g = new Game();
-    document.onkeypress = g.keyPressed.bind(g);
 };
