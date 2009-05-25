@@ -16,16 +16,11 @@ Object.extend( Level.prototype, {
     
     initialize : function(num) {
         this.num = num;
-        this.setupMonsters();
-        this.chef = new Chef(300, 300);
-        this.chef.constraints = rect(C.GRID_LEFT, C.GRID_TOP, C.GRID_RIGHT-C.GRID_LEFT, C.GRID_BOTTOM-C.GRID_TOP);
       
+        this.reset();
                
         this.name = "Hi there";
         this.map = [ new Plate(1, 200, 200) ];
-        this.sprites.push(this.map);
-
-        this.sprites.push([this.chef]);
         
         this.startTime = new Date().getTime();
         this.setupTimer();
@@ -99,7 +94,9 @@ Object.extend( Level.prototype, {
                     comment("1 life");
                 else
                     comment(game.lives + " lives to go");
-                game.nextState = new Level(this.num);
+                game.pause();
+                setTimeout(game.unpause.bind(game), 1200);
+                setTimeout(this.reset.bind(this), 1200);
             }
             else {
                 comment("You're out");
@@ -117,12 +114,24 @@ Object.extend( Level.prototype, {
         
         this.sprites.each( (function(grp) {
             grp.each( (function(sprite) {
-                //this.canvas.fillStyle = 'black';
-                //this.canvas.fillRect(sprite.rect.x, sprite.rect.y, sprite.rect.width, sprite.rect.height);
                 sprite.draw(canvas);
             }).bind(this));
         }).bind(this));
-    },         
+    },
+    
+    reset : function() {
+        this.sprites = [];
+        
+        this.bullets = [];        
+        this.monsters = this.setupMonsters();
+        
+        this.chef = new Chef(300, 300);
+        this.chef.constraints = rect(C.GRID_LEFT, C.GRID_TOP, C.GRID_RIGHT-C.GRID_LEFT, C.GRID_BOTTOM-C.GRID_TOP);
+        
+        this.sprites.push([this.chef]);
+        this.sprites.push(this.bullets);
+        this.sprites.push(this.monsters);
+    },
     
     updateCountdown : function() {
         var time = new Date().getTime()-this.startTime;
@@ -161,9 +170,7 @@ Object.extend( Level.prototype, {
                             rect(C.GRID_LEFT - C.SPRITE_SIZE, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
         mleft.direction = C.LEFT;
                             
-        this.monsters = [mtop, mright, mbot, mleft];
-        this.sprites.push(this.monsters);
-        this.sprites.push(this.bullets);
+        return [mtop, mright, mbot, mleft];
     },
                
     keyPressed : function(evt) {
