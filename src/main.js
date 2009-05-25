@@ -40,6 +40,7 @@ Object.extend(Game.prototype, {
             this.nextState = new Level(30);
             //this.startTime = new Date().getTime();
             this.running = evt.button == 0;
+            elem.onclick = '';
         }).bind(this);
     },
                
