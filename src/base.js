@@ -83,6 +83,11 @@ function rect(x, y, w, h) {
 function rpos(start, dim) {
     return start + parseInt(Math.random() * dim);
 }
+           
+function comment(html) {
+    document.getElementById('comments').innerHTML = html;
+    setTimeout(function() { document.getElementById('comments').innerHTML = "" }, 5000);
+}
 
 /*** CONSTANTS ***/
 var C = {
