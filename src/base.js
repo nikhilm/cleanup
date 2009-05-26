@@ -89,6 +89,26 @@ function comment(html) {
     setTimeout(function() { document.getElementById('comments').innerHTML = "" }, 5000);
 }
 
+function hudRemoveLife() {
+    var hud = document.getElementById('lives');
+    console.log(hud.getElementsByTagName('img')[0]);
+    hud.removeChild(hud.getElementsByTagName('img')[0]);
+    /*var blank = document.createElement('img');
+    blank.src = 'blank.png';
+    hud.appendChild(blank);*/
+}
+
+function hudAddLife() {
+    var hud = document.getElementById('lives');
+    var life = document.createElement('img');
+    life.src = 'weight-lifting.jpg';
+    life.width = 30;
+    life.height = 30;
+    life.className += 'life';
+    hud.appendChild(life);
+}
+    
+
 /*** CONSTANTS ***/
 var C = {
     WORLD_WIDTH : 600,
