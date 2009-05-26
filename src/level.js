@@ -84,8 +84,7 @@ Object.extend( Level.prototype, {
         if( this.chef.dead ) {
             if( game.lives > 0 ) {
                 game.lives -= 1;
-                var hud = document.getElementById('hud');
-                hud.removeChild(hud.getElementsByTagName('img')[0]);
+                hudRemoveLife();
                 this.chef.update();
                 this.chef.dead = false;
                 if( game.lives == 0 )
