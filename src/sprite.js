@@ -117,7 +117,9 @@ Object.extend(Monster.prototype, {
             case C.BOTTOM : bdy = -C.BULLET_SPEED; bdir = C.TOP; break;
             case C.LEFT : bdx = C.BULLET_SPEED; bdir = C.RIGHT; break;
         }
-        var b = new Bullet(this.rect.x, this.rect.y, 'chef', bdx, bdy);
+        var b = new Bullet(this.rect.x, this.rect.y);
+        b.dx = bdx;
+        b.dy = bdy;
         b.direction = bdir;
         return b;
     }
@@ -132,6 +134,7 @@ Object.extend(Bullet.prototype, {
     travelled : 0,
     initialize : function() {
         this._super.initialize.apply(this, arguments);
+        this.setImage('bullet');
     },
     
     update : function() {
