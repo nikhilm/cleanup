@@ -107,9 +107,21 @@ Object.extend(Game.prototype, {
     // TODO: Simple and stupid for now
     drawGrid : function(canvas) {
         canvas.fillStyle = 'maroon';
-        for( var i = 0; i < 14 ; i++ )
-            for( var j = 0; j < 14; j++ )
-                canvas.fillRect(90+i*30, 30+j*30, 30, 30);
+        
+        var map = [ "    ###   ",
+                    "   ## ##  ",
+                    "  ##   ## ",
+                    "  ##   ## ",
+                    "   ## ##  ",
+                    " #  # #  #",
+                    "  ### ### ",
+                    "          " ]
+        for( var i = 0; i < 10 ; i++ ) {
+            for( var j = 0; j < 8; j++ ) {
+                if( map[j].charAt(i) == '#' )
+                    canvas.fillRect(90+i*45, 90+j*45, 30, 30);
+            }
+        }
     },
                           
     pause : function() {
