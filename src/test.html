@@ -32,6 +32,17 @@ div#hud {
     color: maroon;
 }
 
+div#hud div#lives {
+    height:50px;
+}
+
+div#lives img {
+    width: 30px;
+    height: 30px;
+    padding: none;
+    padding-right: 5px;    
+}
+
 div#comments {
     margin:1% 20% 0 20%;
     float:left;
@@ -50,6 +61,7 @@ div#comments {
 <img src="chef-left.jpg" id="chef-left" width="30" height="30" class="gamedata" />
 <img src="weight-lifting.jpg" id="plate-img-1" width="30" height="30" class="gamedata" />
 <img src="weight-lifting.jpg" id="plate-img-2" width="30" height="30" class="gamedata" />
+<img src="fire.png" id="bullet" class="gamedata" />
 <!-- END PRELOADS -->
 
 <h1>Cleanup</h1>
@@ -60,9 +72,8 @@ Fallback content, in case the browser does not support Canvas.
 
 <div id="hud">
 <h4> Lives </h4>
-<img src="weight-lifting.jpg" class="life" width="30" height="30" />
-<img src="weight-lifting.jpg" class="life" width="30" height="30" />
-<img src="weight-lifting.jpg" class="life" width="30" height="30" />
+<div id="lives">
+</div>
 
 <h4> Time </h4>
 <canvas id="time-canvas" width="50" height="300">
