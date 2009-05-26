@@ -14,6 +14,9 @@ Object.extend(Game.prototype, {
         this.setupCanvas();
         this.attachEvents();
         
+        hudAddLife();
+        hudAddLife();
+        hudAddLife();
         setInterval(this.gameLoop.bind(this), 35);
     },
     
@@ -37,7 +40,7 @@ Object.extend(Game.prototype, {
         
         var elem = document.getElementById('game-canvas');
         elem.onclick = (function(evt) {
-            this.nextState = new Level(30);
+            this.nextState = new Level(40);
             //this.startTime = new Date().getTime();
             this.running = evt.button == 0;
             elem.onclick = '';
