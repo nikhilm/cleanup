@@ -25,8 +25,6 @@ Object.extend( Level.prototype, {
         this.startTime = new Date().getTime();
         this.setupTimer();
         comment(this.name);
-        console.log("Fire pbb for level", this.num, "is", 0.01*(this.num/5+1));
-        setInterval( (function(){console.log(this.bullets.length)}).bind(this), 1000);
     },
                
     setupTimer : function() {
@@ -55,7 +53,7 @@ Object.extend( Level.prototype, {
         }).bind(this) );
         // TODO: All collision detection and stuff
         
-        var fire = Math.random() < 0.01*(this.num/5+1);
+        var fire = Math.random() < 0.03*(this.num/5+1);
         var fire_mon = this.monsters[parseInt(Math.random() * 4)];
         this.monsters.each((function(monster) {
             monster.update();
@@ -145,28 +143,28 @@ Object.extend( Level.prototype, {
     },
     
     setupMonsters : function() {
-        var mtop = new Monster(rpos(C.MONSTER_LEFT,  C.MONSTER_RIGHT - C.MONSTER_LEFT), 0,
+        var mtop = new Monster(rpos(C.MONSTER_LEFT+20,  C.MONSTER_RIGHT - C.MONSTER_LEFT), 0,
                             'chef-bottom',
                             C.MONSTER_DELTA, 0,
-                            rect(C.MONSTER_LEFT, 0, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
+                            rect(C.MONSTER_LEFT+20, 0, C.MONSTER_RIGHT - C.MONSTER_LEFT - 15, C.SPRITE_SIZE));
         mtop.direction = C.TOP;
         
-        var mright = new Monster(C.GRID_RIGHT, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
+        var mright = new Monster(C.MONSTER_RIGHT, rpos(C.MONSTER_TOP+20, C.MONSTER_BOTTOM - C.MONSTER_TOP),
                              'chef-left',
                              0, C.MONSTER_DELTA,
-                             rect(C.GRID_RIGHT, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
+                             rect(C.MONSTER_RIGHT, C.MONSTER_TOP+20, C.SPRITE_SIZE, C.MONSTER_BOTTOM - C.MONSTER_TOP));
         mright.direction = C.RIGHT;
                              
-        var mbot = new Monster(rpos(C.MONSTER_LEFT, C.MONSTER_RIGHT - C.MONSTER_LEFT), C.GRID_BOTTOM,
+        var mbot = new Monster(rpos(C.MONSTER_LEFT+20, C.MONSTER_RIGHT - C.MONSTER_LEFT), C.MONSTER_BOTTOM,
                            'chef-top',
                            C.MONSTER_DELTA, 0,
-                           rect(C.MONSTER_LEFT, C.GRID_BOTTOM, C.MONSTER_RIGHT - C.MONSTER_LEFT, C.SPRITE_SIZE));
+                           rect(C.MONSTER_LEFT+20, C.MONSTER_BOTTOM, C.MONSTER_RIGHT - C.MONSTER_LEFT - 15, C.SPRITE_SIZE));
         mbot.direction = C.BOTTOM;
                            
-        var mleft = new Monster(C.GRID_LEFT - C.SPRITE_SIZE, rpos(C.GRID_TOP, C.GRID_BOTTOM - C.GRID_TOP),
+        var mleft = new Monster(C.MONSTER_LEFT, rpos(C.MONSTER_TOP+20, C.MONSTER_BOTTOM - C.MONSTER_TOP),
                             'chef-right',
                             0, C.MONSTER_DELTA,
-                            rect(C.GRID_LEFT - C.SPRITE_SIZE, C.GRID_TOP, C.SPRITE_SIZE, C.GRID_BOTTOM - C.GRID_TOP));
+                            rect(C.MONSTER_LEFT, C.MONSTER_TOP+20, C.SPRITE_SIZE, C.MONSTER_BOTTOM - C.MONSTER_TOP));
         mleft.direction = C.LEFT;
                             
         return [mtop, mright, mbot, mleft];
