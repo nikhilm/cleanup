@@ -20,7 +20,7 @@ Object.extend( Level.prototype, {
         this.reset();
                
         this.name = "Hi there";
-        this.map = [ new Plate(1, 200, 200) ];
+        this.setupMap();
         
         this.startTime = new Date().getTime();
         this.setupTimer();
@@ -40,6 +40,16 @@ Object.extend( Level.prototype, {
         }
         this.timerCanvas.fillStyle = 'maroon';
         this.timerCanvas.fillRect(0, 0, 50, 300);
+    },
+               
+    setupMap : function() {
+        this.map = [];
+        for( var i = 0; i < 9 ; i++ ) {
+            for( var j = 0; j < 8; j++ ) {
+                if( Levels[this.num].map[j].charAt(i) == '#' )
+                    this.map.push( new Plate(1, C.GRID_LEFT + i*50, C.GRID_TOP + j*50) );
+            }
+        }
     },
                
     update : function(game) {
@@ -103,11 +113,18 @@ Object.extend( Level.prototype, {
         }
         this.chef.update(this);
         
-        for( var i = 0; i < this.map.length; i++ )
-            this.map[i].update();
+        this.map.clone().each( (function(plate, i) {
+            plate.update();
+            if( plate.collideRect(this.chef.rect) )
+                this.map.remove(i);
+        }).bind(this) );
     },
                
     draw : function(canvas) {
+        
+        this.map.each( (function(plate) {
+            plate.draw(canvas);
+        }).bind(this) );
         
         this.sprites.each( (function(grp) {
             grp.each( (function(sprite) {

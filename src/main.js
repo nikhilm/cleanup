@@ -40,7 +40,7 @@ Object.extend(Game.prototype, {
         
         var elem = document.getElementById('game-canvas');
         elem.onclick = (function(evt) {
-            this.nextState = new Level(40);
+            this.nextState = new Level(2);
             //this.startTime = new Date().getTime();
             this.running = evt.button == 0;
             elem.onclick = '';
@@ -70,7 +70,6 @@ Object.extend(Game.prototype, {
     draw : function(canvas) {
         canvas.fillStyle = 'black';
         canvas.fillRect(0, 0, 600, 480);
-        this.drawGrid(this.canvas);
         this.state.draw(canvas);
     },
     
@@ -101,26 +100,6 @@ Object.extend(Game.prototype, {
         if( accepted ) {
             evt.stopPropagation();
             evt.preventDefault();
-        }
-    },
-    
-    // TODO: Simple and stupid for now
-    drawGrid : function(canvas) {
-        canvas.fillStyle = 'maroon';
-        
-        var map = [ "    ###   ",
-                    "   ## ##  ",
-                    "  ##   ## ",
-                    "  ##   ## ",
-                    "   ## ##  ",
-                    " #  # #  #",
-                    "  ### ### ",
-                    "          " ]
-        for( var i = 0; i < 10 ; i++ ) {
-            for( var j = 0; j < 8; j++ ) {
-                if( map[j].charAt(i) == '#' )
-                    canvas.fillRect(90+i*45, 90+j*45, 30, 30);
-            }
         }
     },
                           

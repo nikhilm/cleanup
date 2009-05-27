@@ -6,6 +6,12 @@ var Levels = [
  */
 
 // LEVEL 0
+{},
+
+// LEVEL 1
+{},
+
+// LEVEL 2
 {
     name : "",
     map : [ "#       #",
