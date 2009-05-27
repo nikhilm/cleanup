@@ -116,19 +116,19 @@ var C = {
     TILE_WIDTH : 30,
     TILE_HEIGHT : 30,
     
-    GRID_TOP : 30,
-    GRID_RIGHT : 510,
-    GRID_BOTTOM : 450,
-    GRID_LEFT : 90,
+    GRID_TOP : 35,
+    GRID_RIGHT : 520,
+    GRID_BOTTOM : 425,
+    GRID_LEFT : 80,
     
     SPRITE_SIZE : 30,
     
-    MONSTER_LEFT : 90,
-    MONSTER_RIGHT : 510,
+    MONSTER_LEFT : 50,
+    MONSTER_RIGHT : 520,
     MONSTER_TOP : 0,
-    MONSTER_BOTTOM : 420, // top left corner of left and right monsters maximum
+    MONSTER_BOTTOM : 430, // top left corner of left and right monsters maximum
     
-    MONSTER_DELTA : 3,
+    MONSTER_DELTA : 4,
     
     BULLET_SPEED : 2,
     BULLET_RANGE : 420,
