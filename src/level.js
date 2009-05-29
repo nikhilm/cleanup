@@ -7,6 +7,8 @@ Object.extend( Level.prototype, {
     startTime : 0,
     skipTime : 10*1000, // 30 seconds
     skipNext : true,
+    chefStartX : 0,
+    chefStartY : 0,
     map : [], // will be an array of Plates
     monsters : [],
     bullets : [],
@@ -17,10 +19,10 @@ Object.extend( Level.prototype, {
     initialize : function(num) {
         this.num = num;
       
+        this.setupMap();
         this.reset();
                
         this.name = "Hi there";
-        this.setupMap();
         
         this.startTime = new Date().getTime();
         this.setupTimer();
@@ -43,13 +45,17 @@ Object.extend( Level.prototype, {
     },
                
     setupMap : function() {
-        this.map = [];
-        for( var i = 0; i < 9 ; i++ ) {
-            for( var j = 0; j < 8; j++ ) {
-                if( Levels[this.num].map[j].charAt(i) == '#' )
-                    this.map.push( new Plate(1, C.GRID_LEFT + i*50, C.GRID_TOP + j*50) );
-            }
+        var lev = createLevel(Levels[this.num]);
+        
+        if( lev.startX == -1 ) {
+            console.log("Error in parsing level");
+            return;
         }
+        
+        this.chefStartX = lev.startX;
+        this.chefStartY = lev.startY;
+        
+        this.map = lev.map;
     },
                
     update : function(game) {
@@ -139,7 +145,7 @@ Object.extend( Level.prototype, {
         this.bullets = [];        
         this.monsters = this.setupMonsters();
         
-        this.chef = new Chef(300, 300);
+        this.chef = new Chef(this.chefStartX, this.chefStartY);
         this.chef.constraints = rect(C.GRID_LEFT, C.GRID_TOP, C.GRID_RIGHT-C.GRID_LEFT, C.GRID_BOTTOM-C.GRID_TOP);
         
         this.sprites.push([this.chef]);
