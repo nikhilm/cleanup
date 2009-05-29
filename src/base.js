@@ -84,9 +84,11 @@ function rpos(start, dim) {
     return start + parseInt(Math.random() * dim);
 }
            
-function comment(html) {
-    document.getElementById('comments').innerHTML = html;
-    setTimeout(function() { document.getElementById('comments').innerHTML = "" }, 5000);
+function comment(html, duration) {
+    var commentDiv = document.getElementById('comments');
+    commentDiv.innerHTML = html;
+    commentDiv.style.visibility = "visible";
+    setTimeout(function() { commentDiv.style.visibility = "hidden"; }, duration || 5000);
 }
 
 function hudRemoveLife() {
