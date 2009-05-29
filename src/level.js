@@ -102,13 +102,13 @@ Object.extend( Level.prototype, {
                 this.chef.update();
                 this.chef.dead = false;
                 if( game.lives == 0 )
-                    comment("Last life!");
+                    comment("Last life!", 2000);
                 else if( game.lives == 1 )
-                    comment("1 life");
+                    comment("1 life", 2000);
                 else
-                    comment(game.lives + " lives to go");
+                    comment(game.lives + " lives to go", 2000);
                 game.pause();
-                setTimeout(game.unpause.bind(game), 1200);
+                setTimeout(game.unpause.bind(game), 2000);
                 setTimeout(this.reset.bind(this), 1200);
             }
             else {
