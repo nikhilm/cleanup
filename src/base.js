@@ -133,7 +133,7 @@ var C = {
     BULLET_SPEED : 2,
     BULLET_RANGE : 420,
     
-    CHEF_SPEED : 3,
+    CHEF_SPEED : 5,
     
     // general directions, mainly used to constrain sprites
     TOP : 1,
