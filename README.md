@@ -11,13 +11,15 @@ src/test.html is the file you would want to open in your browser once you clone 
 
 Click on the canvas ( black rectangle ) to watch things happen.
 
-Use the arrow keys to move the center right chef, the other stationary chef is a plate
-you are to collect it.
+Use the arrow keys to move the center right chef, the other stationary chefs are the plates you've to collect.
 
 _Why do I just have chefs everywhere?_
 Because a friend who is going to create the graphics is busy right now
 
 TODO
 ----
-* Add state architecture
-* Add powerups
+ * Add smoother transitions between levels and when player dies.
+ * Add scoring system
+ * Allow levels and so on to introduce one off help comments
+ * Use cookie to track state?
+
