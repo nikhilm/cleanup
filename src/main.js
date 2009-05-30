@@ -40,7 +40,7 @@ Object.extend(Game.prototype, {
         
         var elem = document.getElementById('game-canvas');
         elem.onclick = (function(evt) {
-            this.nextState = new Level(2);
+            this.nextState = new Level(0);
             //this.startTime = new Date().getTime();
             this.running = evt.button == 0;
             elem.onclick = '';
@@ -48,9 +48,6 @@ Object.extend(Game.prototype, {
     },
                
     update : function() {
-        if( this.paused )
-            return;
-        
         if( this.state != this.nextState ) {
             this.state = this.nextState;
             this.state.draw(this.canvas);
@@ -63,6 +60,9 @@ Object.extend(Game.prototype, {
                 sprite.erase(this.canvas);
             }).bind(this));
         }).bind(this));*/
+        
+        if( this.paused )
+            return;
         
         this.state.update(this);
     },

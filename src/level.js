@@ -22,7 +22,7 @@ Object.extend( Level.prototype, {
         this.setupMap();
         this.reset();
                
-        this.name = "Hi there";
+        this.name = Levels[this.num].name;
         
         this.startTime = new Date().getTime();
         this.setupTimer();
@@ -61,11 +61,18 @@ Object.extend( Level.prototype, {
     update : function(game) {
         this.updateCountdown();
         
+        if( this.map.length == 0 ) {
+            game.nextState = new Level(this.num + 1);
+            game.pause();
+            setTimeout(game.unpause.bind(game), 2000);
+            return;
+        }
+        
         this.map.clone().each( (function(plate, i) {
-            if( this.chef.collideRect(plate.rect) ) {
-                plate.dead = true;
+            plate.collideChef(this.chef);
+            plate.update();
+            if( plate.dead )
                 this.map.remove(i);
-            }
         }).bind(this) );
         // TODO: All collision detection and stuff
         
@@ -119,11 +126,6 @@ Object.extend( Level.prototype, {
         }
         this.chef.update(this);
         
-        this.map.clone().each( (function(plate, i) {
-            plate.update();
-            if( plate.collideRect(this.chef.rect) )
-                this.map.remove(i);
-        }).bind(this) );
     },
                
     draw : function(canvas) {
