@@ -185,6 +185,7 @@ Object.extend(Plate.prototype, Sprite.prototype);
 Object.extend(Plate.prototype, {
     touches : 1,
     touched : 0,
+    touching : false,
                
     initialize : function(touches) {
         this._super.initialize.apply(this, Array.prototype.slice.call(arguments, 1));
@@ -197,8 +198,16 @@ Object.extend(Plate.prototype, {
             this.dead = true;
     },
                
-    touch : function() {
-        this.touched += 1;
+    collideChef : function(chef) {
+        if( this.touching ) {
+            this.touching = this.collideRect(chef.rect);
+            return;
+        }
+        
+        if( this.collideRect(chef.rect) ) {
+            this.touching = true;
+            this.touched += 1;
+        }
     },
     
     toString : function() {
