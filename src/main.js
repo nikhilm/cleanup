@@ -61,9 +61,6 @@ Object.extend(Game.prototype, {
             }).bind(this));
         }).bind(this));*/
         
-        if( this.paused )
-            return;
-        
         this.state.update(this);
     },
                       
