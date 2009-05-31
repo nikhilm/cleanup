@@ -7,6 +7,7 @@ Object.extend( Level.prototype, {
     startTime : 0,
     skipTime : 10*1000, // 30 seconds
     skipNext : true,
+    skipThis : false,
     chefStartX : 0,
     chefStartY : 0,
     map : [], // will be an array of Plates
@@ -61,8 +62,21 @@ Object.extend( Level.prototype, {
     update : function(game) {
         this.updateCountdown();
         
-        if( this.map.length == 0 ) {
-            game.nextState = new Level(this.num + 1);
+        if( game.paused )
+            return;
+        
+        if( this.map.length == 0 || this.skipThis ) {
+            // we're done with the game
+            // TODO: go to highscore/congrats state
+            if( this.num+1 == Levels.length ) {
+                game.nextState = new Level(0);
+            }
+            else {
+                game.nextState = new Level(this.num + 1);
+                game.nextState.powerups = game.nextState.powerups.concat(this.powerups);
+                if( this.skipNext && !this.skipThis )
+                    game.nextState.skipThis = true;
+            }
             game.pause();
             setTimeout(game.unpause.bind(game), 2000);
             return;
