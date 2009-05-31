@@ -13,6 +13,7 @@ Object.extend( Level.prototype, {
     map : [], // will be an array of Plates
     monsters : [],
     bullets : [],
+    powerups : [],
     chef : null,
     level : null,
     sprites : [],
@@ -25,6 +26,11 @@ Object.extend( Level.prototype, {
                
         this.name = Levels[this.num].name;
         
+        // TODO: not to be added manually
+        var p = new Powerup(0, 0);
+        p.dx = 2;
+        p.dy = 2;
+        this.powerups.push( p );
         this.startTime = new Date().getTime();
         this.setupTimer();
         comment(this.name);
@@ -116,6 +122,20 @@ Object.extend( Level.prototype, {
             }
         }).bind(this));
         
+        var powerups_cpy = this.powerups.clone();
+        powerups_cpy.each( (function(pup, i) {
+            pup.update();
+            if( pup.dead ) {
+                this.powerups.remove(i);
+                return;
+            }
+            // NOTE: it is important to call bullet.collideRect and not the other way round
+            if( !this.chef.dead && pup.collideRect(this.chef.rect) ) {
+                console.log("Powerup!");
+                this.powerups.remove(i);
+            }
+        }).bind(this));
+        
         if( this.chef.dead ) {
             if( game.lives > 0 ) {
                 game.lives -= 1;
@@ -167,6 +187,7 @@ Object.extend( Level.prototype, {
         this.sprites.push([this.chef]);
         this.sprites.push(this.bullets);
         this.sprites.push(this.monsters);
+        this.sprites.push(this.powerups);
     },
     
     updateCountdown : function() {
