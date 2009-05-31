@@ -67,7 +67,7 @@ Array.prototype.each = function(fun) {
 Array.prototype.shuffle = function() {    
     var cpy = this.clone();
     for( var i = this.length - 1; i >= 1; i-- ) {
-        var j = parseInt(Math.random() * (i+1));
+        var j = Math.floor(Math.random() * (i+1));
         tmp = cpy[j];
         cpy[j] = cpy[i];
         cpy[i] = tmp;
@@ -81,7 +81,7 @@ function rect(x, y, w, h) {
 
 // start <= random x < start+dim
 function rpos(start, dim) {
-    return start + parseInt(Math.random() * dim);
+    return start + Math.floor(Math.random() * dim);
 }
            
 function comment(html, duration) {
