@@ -66,6 +66,10 @@ function createLevel(desc) {
         startY: -1,
         map : []
     };
+    
+    if( !desc )
+        return ret;
+    
     desc.map.each( (function(line, i) {
         for( var j = 0; j < line.length; j++ )
         {
