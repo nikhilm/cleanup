@@ -205,6 +205,7 @@ Object.extend(Plate.prototype, {
         }
         
         if( this.collideRect(chef.rect) ) {
+            console.log( "Touched plate", this.rect, chef.rect);
             this.touching = true;
             this.touched += 1;
         }
@@ -257,3 +258,27 @@ Object.extend(Chef.prototype, {
     }
 });
 Object.inherits(Chef, Sprite);
+
+/** Powerups **/
+var Powerup = Class.create();
+Object.extend(Powerup.prototype, Sprite.prototype);
+Object.extend(Powerup.prototype, {
+    initialize : function() {
+        this._super.initialize.apply(this, arguments);
+        // TODO: not here, each powerup has image
+        this.setImage('powerup');
+    },
+               
+    handleConstraint : function(cant_go) {
+        if( cant_go & C.RIGHT ) {
+            this.rect.x = -100;
+            setTimeout( (function() { this.rect.x = 0; }).bind(this), 500 );
+        }
+        if( cant_go & C.BOTTOM ) {
+            this.rect.y = -100;
+            setTimeout( (function() { this.rect.y = 0; }).bind(this), 500 );
+        }
+        return false;
+    }
+});
+Object.inherits(Powerup, Sprite);
