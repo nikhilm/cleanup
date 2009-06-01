@@ -29,8 +29,6 @@ Object.extend( Level.prototype, {
         
         // TODO: not to be added manually
         var p = new Powerup(0, 0);
-        p.dx = 2;
-        p.dy = 2;
         this.powerups.push( p );
         this.startTime = new Date().getTime();
         this.setupTimer();
@@ -124,10 +122,11 @@ Object.extend( Level.prototype, {
             }
         }).bind(this));
         
+        var t = new Date().getTime();
         var powerups_cpy = this.powerups.clone();
         powerups_cpy.each( (function(pup, i) {
             pup.update();
-            if( pup.dead ) {
+            if( pup.dead || ( t - pup.startTime ) > C.POWERUP_EXPIRE ) {
                 this.powerups.remove(i);
                 return;
             }

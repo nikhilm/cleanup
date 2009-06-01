@@ -264,8 +264,10 @@ Object.extend(Powerup.prototype, Sprite.prototype);
 Object.extend(Powerup.prototype, {
     initialize : function() {
         this._super.initialize.apply(this, arguments);
+        this.dx = this.dy = C.POWERUP_SPEED;
         // TODO: not here, each powerup has image
         this.setImage('powerup');
+        this.startTime = new Date().getTime();
     },
                
     handleConstraint : function(cant_go) {
