@@ -205,7 +205,6 @@ Object.extend(Plate.prototype, {
         }
         
         if( this.collideRect(chef.rect) ) {
-            console.log( "Touched plate", this.rect, chef.rect);
             this.touching = true;
             this.touched += 1;
         }
