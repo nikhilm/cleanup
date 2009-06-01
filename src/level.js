@@ -33,7 +33,7 @@ Object.extend( Level.prototype, {
         this.powerups.push( p );
         this.startTime = new Date().getTime();
         this.setupTimer();
-        comment(this.name);
+        comment(this.name, 1800);
     },
                
     setupTimer : function() {
@@ -66,10 +66,10 @@ Object.extend( Level.prototype, {
     },
                
     update : function(game) {
-        this.updateCountdown();
-        
         if( game.paused )
             return;
+        
+        this.updateCountdown();
         
         if( this.map.length == 0 || this.skipThis ) {
             // we're done with the game
