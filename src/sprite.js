@@ -207,6 +207,7 @@ Object.extend(Plate.prototype, {
         if( this.collideRect(chef.rect) ) {
             this.touching = true;
             this.touched += 1;
+            this.setImage('plate-img-'+(this.touches-this.touched));
         }
     },
     
@@ -280,6 +281,46 @@ Object.extend(Powerup.prototype, {
             setTimeout( (function() { this.rect.y = 0; }).bind(this), 500 );
         }
         return false;
+    },
+               
+    toString : function() {
+        return "Powerup";
     }
 });
 Object.inherits(Powerup, Sprite);
+
+var CheesePowerup = Class.create();
+Object.extend(CheesePowerup.prototype, Powerup.prototype);
+Object.extend(CheesePowerup.prototype, {
+    initialize : function() {
+        this._super.initialize.apply(this._super, arguments);
+        Object.extend(this, this._super);
+    },
+
+    enable : function(game) {
+        game.state.bullets.length = 0;
+    },
+
+    toString : function() {
+        return "CheesePowerup";
+    }
+});
+Object.inherits(CheesePowerup, Powerup);
+
+var MonsterKillerPowerup = Class.create();
+Object.extend(MonsterKillerPowerup.prototype, Powerup.prototype);
+Object.extend(MonsterKillerPowerup.prototype, {
+    initialize : function() {
+        this._super.initialize.apply(this._super, arguments);
+        Object.extend(this, this._super);
+    },
+
+    enable : function(game) {
+        game.state.monsters.remove(game.state.monsters.length * Math.random());
+    },
+
+    toString : function() {
+        return "MonsterKillerPowerup";
+    }
+});
+Object.inherits(MonsterKillerPowerup, Powerup);
