@@ -22,6 +22,7 @@ Object.extend( Level.prototype, {
         this.num = num;
       
         this.setupMap();
+        this.powerups = [];
         this.reset();
                
         this.name = Levels[this.num].name;
@@ -79,7 +80,8 @@ Object.extend( Level.prototype, {
             }
             else {
                 game.nextState = new Level(this.num + 1);
-                game.nextState.powerups = game.nextState.powerups.concat(this.powerups);
+                for( var i = 0; i < this.powerups.length; i++ )
+                    game.nextState.powerups.push(this.powerups[i]);
                 if( this.skipNext && !this.skipThis )
                     game.nextState.skipThis = true;
             }
