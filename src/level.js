@@ -22,13 +22,14 @@ Object.extend( Level.prototype, {
         this.num = num;
       
         this.setupMap();
+        this.monsters = this.setupMonsters();
         this.powerups = [];
         this.reset();
                
         this.name = Levels[this.num].name;
         
         // TODO: not to be added manually
-        var p = new Powerup(0, 0);
+        var p = new MonsterKillerPowerup(0, 0);
         this.powerups.push( p );
         this.startTime = new Date().getTime();
         this.setupTimer();
@@ -132,7 +133,7 @@ Object.extend( Level.prototype, {
             }
             // NOTE: it is important to call bullet.collideRect and not the other way round
             if( !this.chef.dead && pup.collideRect(this.chef.rect) ) {
-                console.log("Powerup!");
+                pup.enable(game);
                 this.powerups.remove(i);
             }
         }).bind(this));
@@ -179,8 +180,7 @@ Object.extend( Level.prototype, {
     reset : function() {
         this.sprites = [];
         
-        this.bullets = [];        
-        this.monsters = this.setupMonsters();
+        this.bullets = [];
         
         this.chef = new Chef(this.chefStartX, this.chefStartY);
         this.chef.constraints = rect(C.GRID_LEFT, C.GRID_TOP, C.GRID_RIGHT-C.GRID_LEFT, C.GRID_BOTTOM-C.GRID_TOP);

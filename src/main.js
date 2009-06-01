@@ -40,7 +40,7 @@ Object.extend(Game.prototype, {
         
         var elem = document.getElementById('game-canvas');
         elem.onclick = (function(evt) {
-            this.nextState = new Level(0);
+            this.nextState = new Level(6);
             //this.startTime = new Date().getTime();
             this.running = evt.button == 0;
             elem.onclick = '';
