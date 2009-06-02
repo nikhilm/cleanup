@@ -109,6 +109,47 @@ function hudAddLife() {
     life.className += 'life';
     hud.appendChild(life);
 }
+
+var Cookie = Class.create();
+Object.extend( Cookie.prototype, {
+    oCookie : {},
+    expires : 7*24*60*60*1000, // 7 days from last played
+    initialize : function() {
+        this.expireString = (new Date(new Date().getTime() + this.expires)).toGMTString();
+    },
+               
+    add : function(key, val) {
+        this.oCookie[key] = val;
+        return this;
+    },
+    
+    // NOTE: DOES NOT DELETE a set cookie. call this before calling set
+    remove : function(key) {
+        delete this.oCookie[key];
+    },
+    
+    set : function() {
+        for( key in this.oCookie ) {
+            document.cookie = key + "=" + this.oCookie[key] + "; expires=" + this.expireString + ";";
+        }
+        return this;
+    },
+               
+    // NOTE: case sensitive
+    get : function(key) {
+        var entries = document.cookie.split(';');
+        for( var i = 0; i < entries.length ; i++ ) {
+            var spl = entries[i].split('=');
+            
+            function strip(st) { return st.replace(/^[\t\n ]*/, "").replace(/[\t\n ]*$/, ""); };
+            
+            var k = strip(spl[0]), v = strip(spl[1]);
+            if( k == key )
+                return v;
+        }
+        return null;
+    }
+});
     
 
 /*** CONSTANTS ***/
