@@ -40,7 +40,9 @@ Object.extend(Game.prototype, {
         
         var elem = document.getElementById('game-canvas');
         elem.onclick = (function(evt) {
-            this.nextState = new Level(6);
+            var c = new Cookie();
+            var lev = c.get('level');
+            this.nextState = new Level( lev == null ? 0 : parseInt(lev) );
             //this.startTime = new Date().getTime();
             this.running = evt.button == 0;
             elem.onclick = '';

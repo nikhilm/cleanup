@@ -79,6 +79,8 @@ Object.extend( Level.prototype, {
             }
             else {
                 game.nextState = new Level(this.num + 1);
+                var c = new Cookie();
+                c.add("level", "" + (this.num+1)).set();
                 for( var i = 0; i < this.powerups.length; i++ )
                     game.nextState.powerups.push(this.powerups[i]);
                 if( this.skipNext && !this.skipThis )
