@@ -29,8 +29,9 @@ Object.extend( Level.prototype, {
         this.name = Levels[this.num].name;
         
         // TODO: not to be added manually
-        var p = new MonsterKillerPowerup(0, 0);
+        var p = new TimePowerup(0, 0);
         this.powerups.push( p );
+        this.powerups.push( new TimePowerup(45, 0) );
         this.startTime = new Date().getTime();
         this.setupTimer();
         comment(this.name, 1800);
@@ -199,6 +200,7 @@ Object.extend( Level.prototype, {
             this.skipNext = false;
         }
         else {
+            this.skipNext = true;
             frac = time/this.skipTime;
             this.timerCanvas.fillStyle = 'black';
             this.timerCanvas.fillRect(0, 0, 50, frac*300);

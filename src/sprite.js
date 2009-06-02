@@ -324,3 +324,25 @@ Object.extend(MonsterKillerPowerup.prototype, {
     }
 });
 Object.inherits(MonsterKillerPowerup, Powerup);
+
+var TimePowerup = Class.create();
+Object.extend(TimePowerup.prototype, Powerup.prototype);
+Object.extend(TimePowerup.prototype, {
+    initialize : function() {
+        this._super.initialize.apply(this._super, arguments);
+        Object.extend(this, this._super);
+    },
+
+    enable : function(game) {
+        game.state.setupTimer();
+        console.log("Old startime", game.state.startTime);
+        game.state.startTime = new Date().getTime() - 1000;
+        console.log("New time", game.state.startTime);
+        console.log("Frac", (new Date().getTime()-game.state.startTime)/game.state.skipTime);
+    },
+
+    toString : function() {
+        return "TimePowerup";
+    }
+});
+Object.inherits(TimePowerup, Powerup);
