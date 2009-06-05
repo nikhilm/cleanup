@@ -23,8 +23,16 @@ Object.extend( MenuState.prototype, {
         //this._super.apply(this, arguments);
         
         var newGame = new MenuItem("new", 150, 50);
+        newGame.activate = function() {
+            g.nextState = new Level(0);
+        };
         
         var loadGame = new MenuItem("load", 150, 130);
+        loadGame.activate = function() {            
+            var c = new Cookie();
+            var lev = c.get('level');
+            g.nextState = new Level( lev == null ? 0 : parseInt(lev) );
+        }
         
         var highscore = new MenuItem("scores", 150, 210);
         
