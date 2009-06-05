@@ -30,6 +30,8 @@ Object.extend( MenuState.prototype, {
         
         this.items = [ newGame, loadGame, highscore ];
         
+        document.onmousemove = this.hover.bind(this);
+        document.onclick = this.activate.bind(this);
     },
                
     belowMouse : function(evt) {
