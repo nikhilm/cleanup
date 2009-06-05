@@ -18,6 +18,9 @@ Object.extend(Game.prototype, {
         hudAddLife();
         hudAddLife();
         setInterval(this.gameLoop.bind(this), 35);
+        
+        this.nextState = new MenuState();
+        this.running = true;
     },
     
     setupCanvas : function() {
@@ -39,14 +42,6 @@ Object.extend(Game.prototype, {
         document.onkeypress = this.keyPressed.bind(this);
         
         var elem = document.getElementById('game-canvas');
-        elem.onclick = (function(evt) {
-            var c = new Cookie();
-            var lev = c.get('level');
-            this.nextState = new Level( lev == null ? 0 : parseInt(lev) );
-            //this.startTime = new Date().getTime();
-            this.running = evt.button == 0;
-            elem.onclick = '';
-        }).bind(this);
     },
                
     update : function() {
