@@ -28,8 +28,16 @@ Object.extend( MenuState.prototype, {
         };
         
         var loadGame = new MenuItem("load", 150, 130);
-        loadGame.activate = function() {            
+        loadGame.activate = function() {
             var c = new Cookie();
+            
+            var lives = c.get('lives');
+            if( lives ) {
+                for( var i = 0; i < parseInt(lives); i++ )
+                    hudAddLife();
+                g.lives = lives;
+            }
+            
             var lev = c.get('level');
             g.nextState = new Level( lev == null ? 0 : parseInt(lev) );
         }

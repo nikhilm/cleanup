@@ -32,6 +32,15 @@ Object.extend( Level.prototype, {
         var p = new TimePowerup(0, 0);
         this.powerups.push( p );
         this.powerups.push( new TimePowerup(45, 0) );
+        
+        // setup lives in the first level, then watch the player lose them
+        if( this.num == 0 ) {
+            hudAddLife();
+            hudAddLife();
+            hudAddLife();
+            g.lives = 3;
+        }
+        
         this.startTime = new Date().getTime();
         this.setupTimer();
         comment(this.name, 1800);
@@ -81,7 +90,9 @@ Object.extend( Level.prototype, {
             else {
                 game.nextState = new Level(this.num + 1);
                 var c = new Cookie();
-                c.add("level", "" + (this.num+1)).set();
+                c.add("level", "" + (this.num+1));
+                c.add("lives", "" + game.lives);
+                c.set();
                 for( var i = 0; i < this.powerups.length; i++ )
                     game.nextState.powerups.push(this.powerups[i]);
                 if( this.skipNext && !this.skipThis )
@@ -144,7 +155,11 @@ Object.extend( Level.prototype, {
         if( this.chef.dead ) {
             if( game.lives > 0 ) {
                 game.lives -= 1;
+                
+                var c = new Cookie();
+                c.add("lives", game.lives).set();
                 hudRemoveLife();
+                
                 this.chef.update();
                 this.chef.dead = false;
                 if( game.lives == 0 )

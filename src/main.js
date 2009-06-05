@@ -14,9 +14,6 @@ Object.extend(Game.prototype, {
         this.setupCanvas();
         this.attachEvents();
         
-        hudAddLife();
-        hudAddLife();
-        hudAddLife();
         setInterval(this.gameLoop.bind(this), 35);
         
         this.nextState = new MenuState();
