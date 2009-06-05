@@ -7,7 +7,9 @@ Object.extend( State.prototype, {
                
     update : function() {},
                
-    draw : function(canvas) {}
+    draw : function(canvas) {},
+    
+    keyPressed : function(evt) {}
 });
 Object.inherits(State, Object);
 
