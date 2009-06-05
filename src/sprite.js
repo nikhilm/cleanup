@@ -93,6 +93,30 @@ Object.extend(Sprite.prototype, {
 });
 Object.inherits(Sprite, Object);
 
+var MenuItem = Class.create();
+Object.extend(MenuItem.prototype, Sprite.prototype);
+Object.extend(MenuItem.prototype, {
+    tag : null,
+    initialize : function(desc) {
+        this._super.initialize.apply(this, Array.prototype.slice.call(arguments, 1));
+        this.tag = desc;
+        this.deselect();
+    },
+               
+    select : function() {
+        this.setImage("menu-" + this.tag + "-h");
+    },
+    
+    deselect : function() {
+        this.setImage("menu-" + this.tag);
+    },
+    
+    activate : function() {
+        // ... define your own ...
+    }
+});
+Object.inherits(MenuItem, Sprite);
+
 /*** Spaghetti monsters ***/
 var Monster = Class.create();
 Object.extend(Monster.prototype, Sprite.prototype);
