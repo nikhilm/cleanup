@@ -361,11 +361,11 @@ Object.extend(TimePowerup.prototype, {
     },
 
     enable : function(game) {
+        var nt = new Date().getTime();
+        var diff = nt - game.state.startTime;
+        
+        var tmp = nt - 5000 - ( diff > game.state.skipTime ? 0 : game.state.skipTime - diff );
         game.state.setupTimer();
-        console.log("Old startime", game.state.startTime);
-        game.state.startTime = new Date().getTime() - 1000;
-        console.log("New time", game.state.startTime);
-        console.log("Frac", (new Date().getTime()-game.state.startTime)/game.state.skipTime);
     },
 
     toString : function() {
