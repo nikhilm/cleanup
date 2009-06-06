@@ -225,14 +225,16 @@ Object.extend(Plate.prototype, {
     collideChef : function(chef) {
         if( this.touching ) {
             this.touching = this.collideRect(chef.rect);
-            return;
+            return false;
         }
         
         if( this.collideRect(chef.rect) ) {
             this.touching = true;
             this.touched += 1;
             this.setImage('plate-img-'+(this.touches-this.touched));
+            return true;
         }
+        return false;
     },
     
     toString : function() {
