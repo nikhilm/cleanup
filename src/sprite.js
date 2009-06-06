@@ -316,6 +316,7 @@ Object.inherits(Powerup, Sprite);
 var CheesePowerup = Class.create();
 Object.extend(CheesePowerup.prototype, Powerup.prototype);
 Object.extend(CheesePowerup.prototype, {
+    name : 'Shot blocker',
     initialize : function() {
         this._super.initialize.apply(this._super, arguments);
         Object.extend(this, this._super);
@@ -334,6 +335,7 @@ Object.inherits(CheesePowerup, Powerup);
 var MonsterKillerPowerup = Class.create();
 Object.extend(MonsterKillerPowerup.prototype, Powerup.prototype);
 Object.extend(MonsterKillerPowerup.prototype, {
+    name : 'One less killer',
     initialize : function() {
         this._super.initialize.apply(this._super, arguments);
         Object.extend(this, this._super);
@@ -352,6 +354,7 @@ Object.inherits(MonsterKillerPowerup, Powerup);
 var TimePowerup = Class.create();
 Object.extend(TimePowerup.prototype, Powerup.prototype);
 Object.extend(TimePowerup.prototype, {
+    name : 'Race against the clock',
     initialize : function() {
         this._super.initialize.apply(this._super, arguments);
         Object.extend(this, this._super);
