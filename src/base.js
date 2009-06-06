@@ -179,7 +179,8 @@ var C = {
     CHEF_SPEED : 5,
     
     POWERUP_SPEED : 2,
-    POWERUP_EXPIRE : 30*1000, // 1 minute
+    POWERUP_EXPIRE : 30*1000,
+    POWERUP_WAIT : 20, // not time
     
     // general directions, mainly used to constrain sprites
     TOP : 1,
