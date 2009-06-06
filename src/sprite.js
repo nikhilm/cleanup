@@ -373,3 +373,8 @@ Object.extend(TimePowerup.prototype, {
     }
 });
 Object.inherits(TimePowerup, Powerup);
+
+function randomPowerup() {
+    var pows = [ CheesePowerup, MonsterKillerPowerup, TimePowerup ];
+    return new pows[Math.floor(Math.random()*pows.length)]( -50, -50 );
+}
