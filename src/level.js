@@ -5,11 +5,12 @@ Object.extend( Level.prototype, {
     name : "",
     timerCanvas : null,
     startTime : 0,
-    skipTime : 10*1000, // 30 seconds
+    skipTime : 10*1000, // 10 seconds
     skipNext : true,
     skipThis : false,
     chefStartX : 0,
     chefStartY : 0,
+    powerupCount : 0,
     map : [], // will be an array of Plates
     monsters : [],
     bullets : [],
@@ -27,11 +28,6 @@ Object.extend( Level.prototype, {
         this.reset();
                
         this.name = Levels[this.num].name;
-        
-        // TODO: not to be added manually
-        var p = new TimePowerup(0, 0);
-        this.powerups.push( p );
-        this.powerups.push( new TimePowerup(45, 0) );
         
         // setup lives in the first level, then watch the player lose them
         if( this.num == 0 ) {
@@ -88,7 +84,12 @@ Object.extend( Level.prototype, {
                 game.nextState = new Level(0);
             }
             else {
+                if( this.skipThis )
+                    this.powerupCount += 2;
+                
                 game.nextState = new Level(this.num + 1);
+                game.nextState.powerupCount = this.powerupCount;
+                
                 var c = new Cookie();
                 c.add("level", "" + (this.num+1));
                 c.add("lives", "" + game.lives);
@@ -104,10 +105,13 @@ Object.extend( Level.prototype, {
         }
         
         this.map.clone().each( (function(plate, i) {
-            plate.collideChef(this.chef);
+            if( plate.collideChef(this.chef) ) {
+                this.powerupCount += 0.6;
+            }
             plate.update();
-            if( plate.dead )
+            if( plate.dead ) {
                 this.map.remove(i);
+            }
         }).bind(this) );
         // TODO: All collision detection and stuff
         
@@ -118,6 +122,7 @@ Object.extend( Level.prototype, {
             if( fire && fire_mon === monster ) {
                 this.bullets.push(monster.fire());
                 fire = false;
+                this.powerupCount += 0.1;
             }
         }).bind(this));
         
@@ -147,6 +152,7 @@ Object.extend( Level.prototype, {
             }
             // NOTE: it is important to call bullet.collideRect and not the other way round
             if( !this.chef.dead && pup.collideRect(this.chef.rect) ) {
+                comment(pup.name, 500);
                 pup.enable(game);
                 this.powerups.remove(i);
             }
@@ -160,6 +166,7 @@ Object.extend( Level.prototype, {
                 c.add("lives", game.lives).set();
                 hudRemoveLife();
                 
+                this.powerupCount = Math.max(0, this.powerupCount - C.POWERUP_WAIT);
                 this.chef.update();
                 this.chef.dead = false;
                 if( game.lives == 0 )
@@ -180,6 +187,10 @@ Object.extend( Level.prototype, {
         }
         this.chef.update(this);
         
+        if( this.powerupCount >= C.POWERUP_WAIT ) {
+            this.powerups.push( randomPowerup() );
+            this.powerupCount = 0;
+        }
     },
                
     draw : function(canvas) {
@@ -218,7 +229,7 @@ Object.extend( Level.prototype, {
             this.skipNext = true;
             frac = time/this.skipTime;
             this.timerCanvas.fillStyle = 'black';
-            this.timerCanvas.fillRect(0, 0, 50, frac*300);
+            this.timerCanvas.fillRect(0, 0, 50, Math.floor(frac*300));
         }
     },
     
