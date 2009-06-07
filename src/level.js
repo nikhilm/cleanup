@@ -77,7 +77,7 @@ Object.extend( Level.prototype, {
         
         this.updateCountdown();
         
-        if( this.map.length == 0 || this.skipThis ) {
+        if( this.map.allNull() || this.skipThis ) {
             // we're done with the game
             // TODO: go to highscore/congrats state
             if( this.num+1 == Levels.length ) {
@@ -104,15 +104,16 @@ Object.extend( Level.prototype, {
             return;
         }
         
-        this.map.clone().each( (function(plate, i) {
-            if( plate.collideChef(this.chef) ) {
+        this.map.each( (function(plate, i) {
+            if( !plate ) return;
+            if( plate.collideChef(this.chef) )
                 this.powerupCount += 0.6;
-            }
             plate.update();
             if( plate.dead ) {
-                this.map.remove(i);
+                this.map[i] = null;
             }
         }).bind(this) );
+        
         // TODO: All collision detection and stuff
         
         var fire = Math.random() < 0.03*(this.num/5+1);
@@ -196,6 +197,7 @@ Object.extend( Level.prototype, {
     draw : function(canvas) {
         
         this.map.each( (function(plate) {
+            if( !plate ) return;
             plate.draw(canvas);
         }).bind(this) );
         
