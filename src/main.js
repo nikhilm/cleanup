@@ -78,17 +78,11 @@ Object.extend(Game.prototype, {
     },
     
     keyPressed : function(evt) {
-        if( !this.running )
-            return;
-        
         var accepted = true;
         
-        if( this.paused )
-            return;
-        
-        accepted = this.state.keyPressed(evt)
+        accepted = this.state.keyPressed(evt);
                     
-        if( accepted ) {
+        if( accepted || this.paused ) {
             evt.stopPropagation();
             evt.preventDefault();
         }
