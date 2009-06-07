@@ -231,7 +231,7 @@ Object.extend(Plate.prototype, {
         if( this.collideRect(chef.rect) ) {
             this.touching = true;
             this.touched += 1;
-            this.setImage('plate-img-'+(this.touches-this.touched));
+            this.setImage('plate-img-'+Math.max(1, (this.touches-this.touched)));
             return true;
         }
         return false;
