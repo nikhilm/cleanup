@@ -53,6 +53,13 @@ Array.prototype.remove = function(i) {
     return this;
 }
 
+Array.prototype.allNull = function() {
+    for( var i = 0; i < this.length; i++ )
+        if( this[i] != null )
+            return false;
+    return true;
+}
+
 /*
  * Pass a function f(elt) or f(elt, i)
  */
