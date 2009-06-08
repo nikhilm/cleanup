@@ -129,20 +129,7 @@ Object.extend(Monster.prototype, {
     toString : function() {
         return "Monster";
     },
-               
-    fire : function() {
-        var bdx = 0;
-        var bdy = 0;
-        var bdir = 0;
-        
-        switch( this.direction ) {
-            case C.TOP : bdy = C.BULLET_SPEED; bdir = C.BOTTOM; break;
-            case C.RIGHT : bdx = -C.BULLET_SPEED; bdir = C.LEFT; break;
-            case C.BOTTOM : bdy = -C.BULLET_SPEED; bdir = C.TOP; break;
-            case C.LEFT : bdx = C.BULLET_SPEED; bdir = C.RIGHT; break;
-        }
-    },
-               
+
     fire : function(bullet_arr) {
         var oldimage = this.image.id;
         this.setImage('shield-strong');
