@@ -442,6 +442,6 @@ Object.extend(ShieldPowerup.prototype, {
 Object.inherits(ShieldPowerup, Powerup);
 
 function randomPowerup() {
-    var pows = [ CheesePowerup, MonsterKillerPowerup, TimePowerup ];
-    return new pows[Math.floor(Math.random()*pows.length)]( -50, -50 );
+    var pows = [ CheesePowerup, MonsterKillerPowerup, TimePowerup, ShieldPowerup, LifePowerup ];
+    return new pows[3/*Math.floor(Math.random()*pows.length)*/]( -50, -50 );
 }
