@@ -20,6 +20,7 @@ Object.extend( Level.prototype, {
     sprites : [],
     
     initialize : function(num) {
+        document.onclick = null;
         this.num = num;
       
         this.setupMap();
