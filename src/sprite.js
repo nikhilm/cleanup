@@ -141,11 +141,31 @@ Object.extend(Monster.prototype, {
             case C.BOTTOM : bdy = -C.BULLET_SPEED; bdir = C.TOP; break;
             case C.LEFT : bdx = C.BULLET_SPEED; bdir = C.RIGHT; break;
         }
-        var b = new Bullet(this.rect.x, this.rect.y);
-        b.dx = bdx;
-        b.dy = bdy;
-        b.direction = bdir;
-        return b;
+    },
+               
+    fire : function(bullet_arr) {
+        var oldimage = this.image.id;
+        this.setImage('shield-strong');
+        
+        setTimeout( (function() {
+            var bdx = 0;
+            var bdy = 0;
+            var bdir = 0;
+            
+            switch( this.direction ) {
+                case C.TOP : bdy = C.BULLET_SPEED; bdir = C.BOTTOM; break;
+                case C.RIGHT : bdx = -C.BULLET_SPEED; bdir = C.LEFT; break;
+                case C.BOTTOM : bdy = -C.BULLET_SPEED; bdir = C.TOP; break;
+                case C.LEFT : bdx = C.BULLET_SPEED; bdir = C.RIGHT; break;
+            }
+            var b = new Bullet(this.rect.x, this.rect.y);
+            b.dx = bdx;
+            b.dy = bdy;
+            b.direction = bdir;
+            
+            this.setImage(oldimage);
+            bullet_arr.push(b);
+        }).bind(this), 500 );
     }
 });
 Object.inherits(Monster, Sprite);
