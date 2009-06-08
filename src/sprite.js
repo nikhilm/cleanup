@@ -376,6 +376,26 @@ Object.extend(TimePowerup.prototype, {
 });
 Object.inherits(TimePowerup, Powerup);
 
+var LifePowerup = Class.create();
+Object.extend(LifePowerup.prototype, Powerup.prototype);
+Object.extend(LifePowerup.prototype, {
+    name : 'Extra Life',
+    initialize : function() {
+        this._super.initialize.apply(this._super, arguments);
+        Object.extend(this, this._super);
+    },
+
+    enable : function(game) {
+        game.lives += 1;
+        hudAddLife();
+    },
+
+    toString : function() {
+        return "LifePowerup";
+    }
+});
+Object.inherits(LifePowerup, Powerup);
+
 function randomPowerup() {
     var pows = [ CheesePowerup, MonsterKillerPowerup, TimePowerup ];
     return new pows[Math.floor(Math.random()*pows.length)]( -50, -50 );
