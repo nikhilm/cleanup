@@ -136,7 +136,7 @@ Object.extend( Level.prototype, {
                 return;
             }
             // NOTE: it is important to call bullet.collideRect and not the other way round
-            if( !this.chef.dead && bullet.collideRect(this.chef.rect) ) {
+            if( !this.chef.dead && bullet.collideRect(this.chef.rect) && !this.chef.shield_ ) {
                 this.chef.dead = true;
                 this.bullets.remove(i);
                 return;
@@ -190,6 +190,8 @@ Object.extend( Level.prototype, {
         
         if( this.powerupCount >= C.POWERUP_WAIT ) {
             this.powerups.push( randomPowerup() );
+            // TODO: this is temporary until we get graphics
+            comment(this.powerups[this.powerups.length-1].name, 200);
             this.powerupCount = 0;
         }
     },
