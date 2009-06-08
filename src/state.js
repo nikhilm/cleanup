@@ -22,12 +22,12 @@ Object.extend( MenuState.prototype, {
     initialize : function() {
         //this._super.apply(this, arguments);
         
-        var newGame = new MenuItem("new", 150, 50);
+        var newGame = new MenuItem("new", 150, 150);
         newGame.activate = function() {
             g.nextState = new Level(0);
         };
         
-        var loadGame = new MenuItem("load", 150, 130);
+        var loadGame = new MenuItem("load", 150, 250);
         loadGame.activate = function() {
             var c = new Cookie();
             
@@ -41,10 +41,8 @@ Object.extend( MenuState.prototype, {
             var lev = c.get('level');
             g.nextState = new Level( lev == null ? 0 : parseInt(lev) );
         }
-        
-        var highscore = new MenuItem("scores", 150, 210);
-        
-        this.items = [ newGame, loadGame, highscore ];
+                
+        this.items = [ newGame, loadGame ];
         
         document.onmousemove = this.hover.bind(this);
         document.onclick = this.activate.bind(this);
