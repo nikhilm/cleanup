@@ -131,8 +131,8 @@ Object.extend(Monster.prototype, {
     },
 
     fire : function(bullet_arr) {
-        var oldimage = this.image.id;
-        this.setImage('shield-strong');
+        var oldimage = (this.image.id.indexOf('-hot') == -1) ? this.image.id : this.image.id.replace('-hot', '');
+        this.setImage(oldimage + '-hot');
         
         setTimeout( (function() {
             var bdx = 0;
@@ -152,7 +152,7 @@ Object.extend(Monster.prototype, {
             
             this.setImage(oldimage);
             bullet_arr.push(b);
-        }).bind(this), 500 );
+        }).bind(this), 400 );
     }
 });
 Object.inherits(Monster, Sprite);
