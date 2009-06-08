@@ -135,21 +135,37 @@ Object.extend(Monster.prototype, {
         this.setImage(oldimage + '-hot');
         
         setTimeout( (function() {
-            var bdx = 0;
-            var bdy = 0;
-            var bdir = 0;
+            var b = new Bullet(0, 0);
             
             switch( this.direction ) {
-                case C.TOP : bdy = C.BULLET_SPEED; bdir = C.BOTTOM; break;
-                case C.RIGHT : bdx = -C.BULLET_SPEED; bdir = C.LEFT; break;
-                case C.BOTTOM : bdy = -C.BULLET_SPEED; bdir = C.TOP; break;
-                case C.LEFT : bdx = C.BULLET_SPEED; bdir = C.RIGHT; break;
-            }
-            var b = new Bullet(this.rect.x, this.rect.y);
-            b.dx = bdx;
-            b.dy = bdy;
-            b.direction = bdir;
-            
+                case C.TOP :
+                    b.rect.x = this.rect.x + this.rect.width/2;
+                    b.rect.y = this.rect.y + this.rect.height;
+                    b.dy = C.BULLET_SPEED;
+                    b.direction = C.BOTTOM;
+                    break;
+                    
+                case C.RIGHT :
+                    b.rect.x = this.rect.x;
+                    b.rect.y = this.rect.y + this.rect.height/2;
+                    b.dx = -C.BULLET_SPEED;
+                    b.direction = C.LEFT;
+                    break;
+                    
+                case C.BOTTOM :
+                    b.rect.x = this.rect.x + this.rect.width/2;
+                    b.rect.y = this.rect.y - b.rect.height;
+                    b.dy = -C.BULLET_SPEED;
+                    b.direction = C.TOP;
+                    break;
+                    
+                case C.LEFT :
+                    b.rect.x = this.rect.x + this.rect.width;
+                    b.rect.y = this.rect.y + this.rect.height/2;
+                    b.dx = C.BULLET_SPEED;
+                    b.direction = C.RIGHT;
+                    break;
+            }            
             this.setImage(oldimage);
             bullet_arr.push(b);
         }).bind(this), 400 );
