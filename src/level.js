@@ -121,7 +121,7 @@ Object.extend( Level.prototype, {
         this.monsters.each((function(monster) {
             monster.update();
             if( fire && fire_mon === monster ) {
-                this.bullets.push(monster.fire());
+                monster.fire(this.bullets);
                 fire = false;
                 this.powerupCount += 0.1;
             }
