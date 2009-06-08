@@ -396,6 +396,25 @@ Object.extend(LifePowerup.prototype, {
 });
 Object.inherits(LifePowerup, Powerup);
 
+var ShieldPowerup = Class.create();
+Object.extend(ShieldPowerup.prototype, Powerup.prototype);
+Object.extend(ShieldPowerup.prototype, {
+    name : 'New apron',
+    initialize : function() {
+        this._super.initialize.apply(this._super, arguments);
+        Object.extend(this, this._super);
+    },
+
+    enable : function(game) {
+        game.state.chef.shield();
+    },
+
+    toString : function() {
+        return "ShieldPowerup";
+    }
+});
+Object.inherits(ShieldPowerup, Powerup);
+
 function randomPowerup() {
     var pows = [ CheesePowerup, MonsterKillerPowerup, TimePowerup ];
     return new pows[Math.floor(Math.random()*pows.length)]( -50, -50 );
