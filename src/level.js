@@ -96,8 +96,10 @@ Object.extend( Level.prototype, {
                 c.set();
                 for( var i = 0; i < this.powerups.length; i++ )
                     game.nextState.powerups.push(this.powerups[i]);
-                if( this.skipNext && !this.skipThis )
+                if( this.skipNext && !this.skipThis ) {
+                    comment('Level skipped');
                     game.nextState.skipThis = true;
+                }
             }
             game.pause();
             setTimeout(game.unpause.bind(game), 2000);
