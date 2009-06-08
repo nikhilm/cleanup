@@ -18,6 +18,3 @@ TODO
 ----
  * Add scoring system
  * Allow levels and so on to introduce one off help comments
- * Fix multiple plates bug
- * Add instructions
-
