@@ -247,7 +247,7 @@ Object.inherits(Plate, Sprite);
 var Chef = Class.create();
 Object.extend(Chef.prototype, Sprite.prototype);
 Object.extend(Chef.prototype, {
-               
+    shield_ : null,
     initialize : function() {
         this._super.initialize.apply(this, arguments);
         this.setImage('chef-top');
@@ -257,6 +257,22 @@ Object.extend(Chef.prototype, {
         if( cant_go & (C.RIGHT|C.LEFT) ) this.dx = 0;
         if( cant_go & (C.TOP|C.BOTTOM) ) this.dy = 0;
         return false;
+    },
+
+    update : function(game) {
+        this._super.update.apply(this, arguments);
+        
+        if( this.shield_ ) {
+            this.shield_.dx = this.dx;
+            this.shield_.dy = this.dy;
+            this.shield_.update(game);
+        }   
+    },
+               
+    draw : function(canvas) {
+        this._super.draw.apply(this, arguments);
+        if( this.shield_ )
+            this.shield_.draw(canvas);
     },
                
     move : function(dir) {
@@ -276,8 +292,18 @@ Object.extend(Chef.prototype, {
         else if( dir & C.LEFT ) { 
             this.dx = -C.CHEF_SPEED;
             this.setImage('chef-left');
-        }
+        }        
     },
+
+    shield : function() {
+        this.shield_ = new Sprite(this.rect.x-5, this.rect.y-5, 'shield-strong', this.dx, this.dy);
+        setTimeout( (function() {
+            this.shield_ = new Sprite(this.rect.x-5, this.rect.y-5, 'shield-weak', this.dx, this.dy);
+            setTimeout( (function() {
+                this.shield_ = null;
+            }).bind(this), 2000 );
+        }).bind(this), 5000 );
+    },    
     
     toString : function() {
         return "Chef";
