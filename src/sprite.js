@@ -412,11 +412,15 @@ Object.extend(TimePowerup.prototype, {
     },
 
     enable : function(game) {
-        var nt = new Date().getTime();
-        var diff = nt - game.state.startTime;
-        
-        var tmp = nt - 5000 - ( diff > game.state.skipTime ? 0 : game.state.skipTime - diff );
         game.state.setupTimer();
+        var nt = new Date().getTime();
+        
+        var add = 3000;
+        var diff = nt - game.state.startTime;
+        if( diff > game.state.skipTime )
+            game.state.startTime = nt - (game.state.skipTime - add);
+        else            
+            game.state.startTime += Math.min(diff, add);
     },
 
     toString : function() {
