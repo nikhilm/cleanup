@@ -6,6 +6,7 @@ Object.extend( Level.prototype, {
     timerCanvas : null,
     startTime : 0,
     skipTime : 10*1000, // 10 seconds
+    frac : 0,
     skipNext : true,
     skipThis : false,
     chefStartX : 0,
@@ -54,8 +55,6 @@ Object.extend( Level.prototype, {
                 console.log("Error setting up timer canvas");
             }
         }
-        this.timerCanvas.fillStyle = 'maroon';
-        this.timerCanvas.fillRect(0, 0, 50, 300);
     },
                
     setupMap : function() {
@@ -73,10 +72,11 @@ Object.extend( Level.prototype, {
     },
                
     update : function(game) {
-        if( game.paused )
-            return;
         
         this.updateCountdown();
+        
+        if( game.paused )
+            return;
         
         if( this.map.allNull() || this.skipThis ) {
             // we're done with the game
@@ -200,6 +200,12 @@ Object.extend( Level.prototype, {
     },
                
     draw : function(canvas) {
+        this.timerCanvas.fillStyle = 'gray';
+        this.timerCanvas.fillRect(0, 0, 50, 300);
+        this.timerCanvas.fillStyle = 'maroon';
+        this.timerCanvas.fillRect(1, 1, 48, 298);
+        this.timerCanvas.fillStyle = 'black';
+        this.timerCanvas.fillRect(1, 1, 48, Math.floor(this.frac*298));
         
         this.map.each( (function(plate) {
             if( !plate ) return;
@@ -231,12 +237,11 @@ Object.extend( Level.prototype, {
         var time = new Date().getTime()-this.startTime;
         if ( time > this.skipTime ) {
             this.skipNext = false;
+            this.frac = 1;
         }
         else {
             this.skipNext = true;
-            frac = time/this.skipTime;
-            this.timerCanvas.fillStyle = 'black';
-            this.timerCanvas.fillRect(0, 0, 50, Math.floor(frac*300));
+            this.frac = time/this.skipTime;
         }
     },
     
