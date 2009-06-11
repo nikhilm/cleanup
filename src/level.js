@@ -82,7 +82,7 @@ Object.extend( Level.prototype, {
             // we're done with the game
             // TODO: go to highscore/congrats state
             if( this.num+1 == Levels.length ) {
-                game.nextState = new Level(0);
+                game.nextState = new FinishState(true);
             }
             else {
                 if( this.skipThis )
@@ -184,9 +184,7 @@ Object.extend( Level.prototype, {
                 setTimeout(this.reset.bind(this), 1200);
             }
             else {
-                comment("You're out");
-                //actually go to next state
-                game.pause();
+                game.nextState = new FinishState(false);
             }
         }
         this.chef.update(this);
