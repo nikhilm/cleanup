@@ -132,7 +132,7 @@ Object.extend(Monster.prototype, {
 
     fire : function(bullet_arr) {
         var oldimage = (this.image.id.indexOf('-hot') == -1) ? this.image.id : this.image.id.replace('-hot', '');
-        this.setImage(oldimage + '-hot');
+        //this.setImage(oldimage + '-hot');
         
         setTimeout( (function() {
             var b = new Bullet(0, 0);
@@ -341,8 +341,6 @@ Object.extend(Powerup.prototype, {
     initialize : function() {
         this._super.initialize.apply(this, arguments);
         this.dx = this.dy = C.POWERUP_SPEED;
-        // TODO: not here, each powerup has image
-        this.setImage('powerup');
         this.startTime = new Date().getTime();
     },
                
@@ -371,6 +369,7 @@ Object.extend(CheesePowerup.prototype, {
     initialize : function() {
         this._super.initialize.apply(this._super, arguments);
         Object.extend(this, this._super);
+        this.setImage('powerup-cheese');
     },
 
     enable : function(game) {
@@ -409,6 +408,7 @@ Object.extend(TimePowerup.prototype, {
     initialize : function() {
         this._super.initialize.apply(this._super, arguments);
         Object.extend(this, this._super);
+        this.setImage('powerup-timer');
     },
 
     enable : function(game) {
@@ -436,6 +436,7 @@ Object.extend(LifePowerup.prototype, {
     initialize : function() {
         this._super.initialize.apply(this._super, arguments);
         Object.extend(this, this._super);
+        this.setImage('powerup-life');
     },
 
     enable : function(game) {
