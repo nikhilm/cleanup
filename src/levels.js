@@ -124,7 +124,7 @@ var Levels = [
 
 // LEVEL 9
 {
-    name : "Ask me no questions",
+    name : "Enigma",
     map : [ "   ####  ",
             "  ##  ## ",
             "      ## ",
