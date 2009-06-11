@@ -110,7 +110,7 @@ function hudRemoveLife() {
 function hudAddLife() {
     var hud = document.getElementById('lives');
     var life = document.createElement('img');
-    life.src = 'images/weight-lifting.jpg';
+    life.src = 'images/chef-top.png';
     life.width = 30;
     life.height = 30;
     life.className += 'life';
