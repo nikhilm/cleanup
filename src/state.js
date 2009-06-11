@@ -20,7 +20,7 @@ Object.extend( MenuState.prototype, {
     items : [],
     
     initialize : function() {
-        //this._super.apply(this, arguments);
+        this._super.initialize.apply(this, arguments);
         
         var newGame = new MenuItem("new", 150, 150);
         newGame.activate = function() {
@@ -79,3 +79,30 @@ Object.extend( MenuState.prototype, {
     }
 });
 Object.inherits( MenuState, State );
+
+var FinishState = Class.create();
+Object.extend( FinishState.prototype, State.prototype );
+Object.extend( FinishState.prototype, {
+    name : "Finish",
+    image : null,
+    
+    // congrats if true, game over if false
+    initialize : function(success) {
+        this._super.initialize.apply(this, Array.prototype.slice.call(arguments, 1));
+        
+        this.image = document.getElementById( success ? 'gamewon' : 'gamelost' );
+        
+        document.onclick = function() {
+            g.nextState = new MenuState(0);
+        }
+    },
+    
+    draw : function(canvas) {
+        canvas.drawImage( this.image, 150, 30, 300, 300 );
+    },
+
+    toString : function() {
+        return this.name;
+    }
+});
+Object.inherits( FinishState, State );
