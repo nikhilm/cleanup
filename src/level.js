@@ -167,11 +167,12 @@ Object.extend( Level.prototype, {
         }).bind(this));
         
         if( this.chef.dead ) {
+            var c = new Cookie();
+            c.add("lives", game.lives).set();
+            
             if( game.lives > 0 ) {
                 game.lives -= 1;
                 
-                var c = new Cookie();
-                c.add("lives", game.lives).set();
                 hudRemoveLife();
                 
                 this.powerupCount = Math.max(0, this.powerupCount - C.POWERUP_WAIT);
