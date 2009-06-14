@@ -9,8 +9,11 @@ Object.extend(Game.prototype, {
     nextState : null,
     
     lives : 3,
+               
+    bg : null,
     
     initialize : function() {
+        this.bg = document.getElementById('background');
         this.setupCanvas();
         this.attachEvents();
         
@@ -60,7 +63,7 @@ Object.extend(Game.prototype, {
                       
     draw : function(canvas) {
         canvas.fillStyle = 'black';
-        canvas.fillRect(0, 0, 600, 480);
+        canvas.drawImage(this.bg, 0, 0, 600, 480);
         this.state.draw(canvas);
     },
     
