@@ -132,7 +132,7 @@ Object.extend(Monster.prototype, {
 
     fire : function(bullet_arr) {
         var oldimage = (this.image.id.indexOf('-hot') == -1) ? this.image.id : this.image.id.replace('-hot', '');
-        //this.setImage(oldimage + '-hot');
+        this.setImage(oldimage + '-hot');
         
         setTimeout( (function() {
             var b = new Bullet(0, 0);
@@ -168,7 +168,7 @@ Object.extend(Monster.prototype, {
             }            
             this.setImage(oldimage);
             bullet_arr.push(b);
-        }).bind(this), 400 );
+        }).bind(this), 800 );
     }
 });
 Object.inherits(Monster, Sprite);
@@ -389,6 +389,7 @@ Object.extend(MonsterKillerPowerup.prototype, {
     initialize : function() {
         this._super.initialize.apply(this._super, arguments);
         Object.extend(this, this._super);
+        this.setImage('powerup-monster');
     },
 
     enable : function(game) {
@@ -457,6 +458,7 @@ Object.extend(ShieldPowerup.prototype, {
     initialize : function() {
         this._super.initialize.apply(this._super, arguments);
         Object.extend(this, this._super);
+        this.setImage('shield-strong');
     },
 
     enable : function(game) {
