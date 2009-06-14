@@ -32,10 +32,13 @@ Object.extend( MenuState.prototype, {
             var c = new Cookie();
             
             var lives = c.get('lives');
-            if( lives ) {
+            if( parseInt(lives) > 0 ) {
                 for( var i = 0; i < parseInt(lives); i++ )
                     hudAddLife();
                 g.lives = lives;
+            }
+            else {
+                return;
             }
             
             var lev = c.get('level');
