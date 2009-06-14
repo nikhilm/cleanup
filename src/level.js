@@ -120,6 +120,9 @@ Object.extend( Level.prototype, {
         // TODO: All collision detection and stuff
         
         var fire = Math.random() < 0.03*(this.num/5+1);
+        //don't fire immediately after we start
+        if( new Date().getTime() - this.startTime < 3000 )
+            fire = false;
         var fire_mon = this.monsters[parseInt(Math.random() * 4)];
         this.monsters.each((function(monster) {
             monster.update();
