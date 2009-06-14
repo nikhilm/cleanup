@@ -196,8 +196,6 @@ Object.extend( Level.prototype, {
         
         if( this.powerupCount >= C.POWERUP_WAIT ) {
             this.powerups.push( randomPowerup() );
-            // TODO: this is temporary until we get graphics
-            comment(this.powerups[this.powerups.length-1].name, 200);
             this.powerupCount = 0;
         }
     },
@@ -250,25 +248,25 @@ Object.extend( Level.prototype, {
     
     setupMonsters : function() {
         var mtop = new Monster(rpos(C.MONSTER_LEFT+20,  C.MONSTER_RIGHT - C.MONSTER_LEFT), 0,
-                            'chef-bottom',
+                            'monster-top',
                             C.MONSTER_DELTA, 0,
                             rect(C.MONSTER_LEFT+20, 0, C.MONSTER_RIGHT - C.MONSTER_LEFT - 15, C.SPRITE_SIZE));
         mtop.direction = C.TOP;
         
         var mright = new Monster(C.MONSTER_RIGHT, rpos(C.MONSTER_TOP+20, C.MONSTER_BOTTOM - C.MONSTER_TOP),
-                             'chef-left',
+                             'monster-right',
                              0, C.MONSTER_DELTA,
                              rect(C.MONSTER_RIGHT, C.MONSTER_TOP+20, C.SPRITE_SIZE, C.MONSTER_BOTTOM - C.MONSTER_TOP));
         mright.direction = C.RIGHT;
                              
         var mbot = new Monster(rpos(C.MONSTER_LEFT+20, C.MONSTER_RIGHT - C.MONSTER_LEFT), C.MONSTER_BOTTOM,
-                           'chef-top',
+                           'monster-bottom',
                            C.MONSTER_DELTA, 0,
                            rect(C.MONSTER_LEFT+20, C.MONSTER_BOTTOM, C.MONSTER_RIGHT - C.MONSTER_LEFT - 15, C.SPRITE_SIZE));
         mbot.direction = C.BOTTOM;
                            
         var mleft = new Monster(C.MONSTER_LEFT, rpos(C.MONSTER_TOP+20, C.MONSTER_BOTTOM - C.MONSTER_TOP),
-                            'chef-right',
+                            'monster-left',
                             0, C.MONSTER_DELTA,
                             rect(C.MONSTER_LEFT, C.MONSTER_TOP+20, C.SPRITE_SIZE, C.MONSTER_BOTTOM - C.MONSTER_TOP));
         mleft.direction = C.LEFT;
