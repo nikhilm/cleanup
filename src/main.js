@@ -30,7 +30,7 @@ Object.extend(Game.prototype, {
             // Remember: you can only initialize one context per element.
             this.canvas = elem.getContext('2d');
             if (!this.canvas) {
-                console.log("Error setting up canvas");
+                comment("Error setting up canvas. Make sure you have a browser supporting canvas (Firefox 3)", 600000);
             }
         }
         this.canvas.fillRect(0, 0, 600, 480);

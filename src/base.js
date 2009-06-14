@@ -100,7 +100,6 @@ function comment(html, duration) {
 
 function hudRemoveLife() {
     var hud = document.getElementById('lives');
-    console.log(hud.getElementsByTagName('img')[0]);
     hud.removeChild(hud.getElementsByTagName('img')[0]);
     /*var blank = document.createElement('img');
     blank.src = 'blank.png';

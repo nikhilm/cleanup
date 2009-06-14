@@ -52,7 +52,7 @@ Object.extend( Level.prototype, {
             // Remember: you can only initialize one context per element.
             this.timerCanvas = timer.getContext('2d');
             if (!this.timerCanvas) {
-                console.log("Error setting up timer canvas");
+                comment("Error setting up timer canvas, make sure you have a browser supporting canvas", 600000);
             }
         }
     },
@@ -61,7 +61,7 @@ Object.extend( Level.prototype, {
         var lev = createLevel(Levels[this.num]);
         
         if( lev.startX == -1 ) {
-            console.log("Error in parsing level");
+            comment("Error in parsing level", 600000);
             return;
         }
         
