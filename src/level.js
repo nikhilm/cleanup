@@ -39,9 +39,9 @@ Object.extend( Level.prototype, {
             g.lives = 3;
         }
         
-        this.startTime = new Date().getTime();
         this.setupTimer();
         comment(this.name, 1800);
+        this.startTime = new Date().getTime()+1800;
     },
                
     setupTimer : function() {
