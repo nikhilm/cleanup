@@ -142,8 +142,9 @@ Object.extend( Level.prototype, {
                 return;
             }
             // NOTE: it is important to call bullet.collideRect and not the other way round
-            if( !this.chef.dead && bullet.collideRect(this.chef.rect) && !this.chef.shield_ ) {
-                this.chef.dead = true;
+            if( !this.chef.dead && bullet.collideRect(this.chef.rect) ) {
+                 if( !this.chef.shield_ )
+                    this.chef.dead = true;
                 this.bullets.remove(i);
                 return;
             }
