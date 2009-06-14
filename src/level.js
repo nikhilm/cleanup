@@ -275,6 +275,8 @@ Object.extend( Level.prototype, {
     },
                
     keyPressed : function(evt) {
+        if( g.paused )
+            return true;
         if( evt.keyCode == 38 ) // up arrow
             this.chef.move(C.TOP);
         else if( evt.keyCode == 40 )
