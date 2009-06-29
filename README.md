@@ -1,7 +1,7 @@
 Cleanup
 ===================================================
 
-_UPDATE_: Cleanup is now done, unfortunately I can't push it to GitHub right now. Play it
+_UPDATE_: Cleanup is now done. Play it
 at [http://www.codechef.com/MAYGAMER/viewgame/cleanup/].
 It won a special mention as the best JS game!
 Thanks to Denny George for the graphics.
